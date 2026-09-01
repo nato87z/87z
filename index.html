@@ -5,85 +5,81 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>87z — Configuração de Mapeamento</title>
 <style>
-:root{--bg:#090a0d;--panel:#101217;--panel2:#15171d;--line:#2a2d35;--text:#f4f5f7;--muted:#9a9da6;--accent:#e63946;--accent2:#ff5964}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -20%,#1c2029 0,#0b0c10 48%,#07080a 100%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}body{padding:22px}
-.app{max-width:1500px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.brand{font-weight:900;font-size:24px;letter-spacing:-1px}.brand small{font-size:10px;color:#777;margin-left:8px;letter-spacing:1.5px}.hint{font-size:12px;color:var(--muted)}
-.tabs{display:flex;gap:8px;margin-bottom:14px}.tab{border:1px solid var(--line);background:#111319;color:#aaa;border-radius:9px;padding:10px 16px;font-weight:800;cursor:pointer}.tab.active,.tab:hover{color:#fff;border-color:#555;background:#1a1d24}.tab.active{box-shadow:inset 0 -2px 0 var(--accent)}
-.layout{display:grid;grid-template-columns:minmax(420px,1fr) minmax(560px,1.1fr);gap:14px}.panel{background:linear-gradient(180deg,#121419,#0e1014);border:1px solid var(--line);border-radius:13px;overflow:hidden;min-height:680px}.panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.panel-title{font-size:14px;font-weight:900;letter-spacing:1.2px}.panel-sub{font-size:11px;color:var(--muted);margin-top:4px}.stage{height:620px;display:flex;align-items:center;justify-content:center;position:relative;padding:18px}.controller-wrap{width:min(92%,650px);position:relative}.controller-wrap img{display:block;width:100%;height:auto;user-select:none;pointer-events:none;filter:drop-shadow(0 22px 30px rgba(0,0,0,.45))}.hotspot{position:absolute;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;border:1px solid transparent;background:rgba(255,255,255,0);cursor:grab}.hotspot:hover{background:rgba(230,57,70,.18);border-color:rgba(255,89,100,.8);box-shadow:0 0 0 5px rgba(230,57,70,.09)}.hotspot:active{cursor:grabbing}.hotspot .tip{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) scale(.96);width:max-content;max-width:220px;padding:9px 11px;border:1px solid #454953;border-radius:8px;background:#0b0c10;color:#fff;font-size:11px;line-height:1.35;box-shadow:0 12px 28px rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:.12s;z-index:20;text-align:center}.hotspot:hover .tip{opacity:1;transform:translateX(-50%) scale(1)}
-/* positions are percentages of the supplied red controller image */
-.h-a{left:75.7%;top:39.2%}.h-b{left:80.1%;top:35.1%}.h-x{left:71.9%;top:34.0%}.h-y{left:76.0%;top:28.7%}.h-lb{left:29.5%;top:24.7%}.h-rb{left:70.8%;top:24.7%}.h-lt{left:22.5%;top:23.8%}.h-rt{left:77.8%;top:23.8%}.h-back{left:42.7%;top:33.0%}.h-start{left:55.5%;top:33.0%}.h-guide{left:49.0%;top:25.6%}.h-dpad-up{left:37.8%;top:39.0%}.h-dpad-down{left:37.8%;top:47.0%}.h-dpad-left{left:34.8%;top:43.0%}.h-dpad-right{left:40.8%;top:43.0%}.h-ls{left:27.0%;top:42.0%}.h-rs{left:60.7%;top:42.2%}.h-l3{left:27.0%;top:42.0%}.h-r3{left:60.7%;top:42.2%}
-.keyboard{padding:14px}.keyboard-top{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}.mode{display:flex;gap:7px}.mode button{background:#111319;border:1px solid var(--line);color:#aaa;border-radius:8px;padding:8px 12px;font-weight:800;cursor:pointer}.mode button.active{background:#e9e9ea;color:#0b0c10;border-color:#e9e9ea}.instruction{font-size:11px;color:var(--muted)}.key-area{border:1px solid var(--line);border-radius:10px;background:#0a0b0e;padding:10px}.row{display:grid;grid-template-columns:repeat(14,1fr);gap:6px;margin-bottom:6px}.key{min-height:42px;border:1px solid #343740;border-radius:7px;background:linear-gradient(#1a1c21,#121419);color:#e5e6e9;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;position:relative;cursor:default;transition:.12s;user-select:none}.key.small{font-size:9px}.key.w2{grid-column:span 2}.key.w3{grid-column:span 3}.key.w4{grid-column:span 4}.key.w5{grid-column:span 5}.key.space{grid-column:span 6}.key.dragover{border-color:var(--accent2);box-shadow:0 0 0 2px rgba(230,57,70,.2);transform:translateY(-1px)}.key .mapped{position:absolute;right:4px;bottom:3px;font-size:7px;color:#7f838e;font-weight:700}.key .func{position:absolute;left:5px;bottom:3px;font-size:7px;color:var(--accent2);font-weight:800}.mouse-panel{display:none;padding:14px}.mouse-panel.active{display:block}.mouse{height:570px;display:flex;align-items:center;justify-content:center;position:relative}.mouse-shape{width:190px;height:350px;border:2px solid #777b85;border-radius:90px 90px 80px 80px;background:linear-gradient(100deg,#1a1d23,#0c0e12);position:relative;box-shadow:0 20px 40px rgba(0,0,0,.45)}.mouse-shape:before{content:"";position:absolute;left:50%;top:12px;transform:translateX(-50%);width:2px;height:105px;background:#4d515b}.mouse-btn{position:absolute;border:1px solid transparent;border-radius:12px;color:#fff;font-size:10px;font-weight:900;padding:8px 10px;background:transparent;cursor:grab}.mouse-btn:hover{border-color:var(--accent);background:rgba(230,57,70,.12)}.m1{left:25px;top:22px}.m2{right:25px;top:22px}.mx2{left:-115px;top:115px}.mx3{right:-115px;top:115px}.wheel{position:absolute;left:50%;top:52px;transform:translateX(-50%);font-size:9px;color:#aaa}
-.bottom{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:14px;padding:12px 15px;border:1px solid var(--line);border-radius:10px;background:#0e1014}.status{font-size:11px;color:#aaa}.status b{color:#fff}.apply{border:0;border-radius:8px;background:#e8e8e8;color:#101114;padding:10px 16px;font-weight:900;cursor:pointer}.apply:hover{background:#fff}.toast{position:fixed;right:22px;bottom:22px;background:#16181d;border:1px solid #444;border-radius:9px;padding:11px 14px;font-size:12px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
-@media(max-width:1000px){body{padding:10px}.layout{grid-template-columns:1fr}.panel{min-height:auto}.stage{height:500px}.row{gap:4px}.key{min-height:36px;font-size:9px}}
-@media(max-width:600px){.stage{height:390px}.controller-wrap{width:100%}.layout{grid-template-columns:1fr}.panel-head{padding:12px}.hint{display:none}.key{min-height:30px;font-size:7px}.row{gap:3px}.bottom{flex-direction:column;align-items:stretch}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0a0b0c;color:#f2f2f2;font-family:Inter,Segoe UI,Arial,sans-serif}body{background:radial-gradient(circle at 50% 10%,#18191b 0,#0b0c0e 52%,#070809 100%);overflow-x:hidden}button{font:inherit}
+.app{min-height:100vh;display:flex;flex-direction:column}.top{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid #27282b;background:#0d0e10}.brand{font-weight:900;letter-spacing:1px}.brand small{font-size:10px;color:#707278;margin-left:8px;font-weight:600}.hint{font-size:11px;color:#85878c}.nav{height:48px;display:flex;align-items:center;justify-content:center;gap:8px;border-bottom:1px solid #242529;background:#0d0e10}.nav button{border:1px solid transparent;background:transparent;color:#8c8e94;padding:8px 24px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:800}.nav button.active{background:#ededed;color:#111;border-color:#fff}.content{flex:1;padding:18px 24px 28px}.mapping-page{max-width:1450px;margin:0 auto}.titlebar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px}.title{font-size:18px;font-weight:900;letter-spacing:.8px}.subtitle{font-size:10px;color:#777a80;margin-top:4px}.workspace{display:grid;grid-template-columns:minmax(430px,1fr) minmax(620px,1.22fr);gap:14px;min-height:690px}.panel{border:1px solid #2b2c30;border-radius:12px;background:rgba(16,17,19,.88);box-shadow:0 20px 60px #0008;overflow:hidden}.panel-head{height:48px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #292a2e}.panel-head h2{font-size:12px;margin:0;letter-spacing:1px}.panel-head span{font-size:9px;color:#686a70}.device-stage{position:relative;height:calc(100% - 48px);min-height:640px;display:flex;align-items:center;justify-content:center;padding:20px}.device-image{width:min(100%,680px);max-height:620px;object-fit:contain;filter:drop-shadow(0 25px 35px #0009);mix-blend-mode:screen;user-select:none;pointer-events:none}.hotspot{position:absolute;border:1px solid transparent;background:transparent;border-radius:50%;cursor:grab;z-index:3;transition:.15s}.hotspot:hover,.hotspot.selected{border-color:#f1f1f1;background:#ffffff14;box-shadow:0 0 0 5px #fff0,0 0 24px #fff4}.hotspot:active{cursor:grabbing}.tooltip{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);min-width:145px;padding:8px 10px;border:1px solid #44464b;border-radius:7px;background:#111216;box-shadow:0 12px 30px #000;opacity:0;pointer-events:none;transition:.12s;text-align:center}.hotspot:hover .tooltip{opacity:1}.tooltip b{display:block;font-size:10px}.tooltip small{display:block;color:#999ca3;font-size:9px;margin-top:3px}.h-dpad{left:25%;top:40%;width:17%;height:23%}.h-ls{left:31%;top:57%;width:16%;height:18%}.h-rs{right:27%;top:57%;width:16%;height:18%}.h-tri{right:19%;top:31%;width:9%;height:8%}.h-circle{right:12%;top:43%;width:9%;height:8%}.h-cross{right:19%;top:51%;width:9%;height:8%}.h-square{right:26%;top:43%;width:9%;height:8%}.h-l1{left:20%;top:19%;width:9%;height:7%}.h-r1{right:20%;top:19%;width:9%;height:7%}.h-l2{left:21%;top:8%;width:13%;height:13%}.h-r2{right:21%;top:8%;width:13%;height:13%}.h-share{left:43%;top:49%;width:7%;height:7%}.h-options{right:43%;top:49%;width:7%;height:7%}.h-touch{left:42%;top:22%;width:16%;height:25%}.h-l3{left:30%;top:61%;width:9%;height:8%}.h-r3{right:30%;top:61%;width:9%;height:8%}
+.right{display:flex;flex-direction:column;min-width:0}.device-tabs{display:flex;gap:6px}.device-tabs button{border:1px solid #36373b;background:#141519;color:#8e9096;border-radius:7px;padding:6px 12px;font-size:9px;font-weight:900;cursor:pointer}.device-tabs button.active{background:#eee;color:#111}.mapping-board{position:relative;height:calc(100% - 48px);min-height:640px;padding:18px;overflow:auto}.keyboard{width:100%;height:100%;min-height:570px;object-fit:contain;object-position:center;filter:drop-shadow(0 20px 35px #0009);mix-blend-mode:screen;user-select:none;pointer-events:none}.mouse-view{display:none;height:100%;align-items:center;justify-content:center}.mouse-view.active{display:flex}.mouse-image{width:min(78%,620px);object-fit:contain;mix-blend-mode:screen;filter:drop-shadow(0 20px 35px #0009)}.keyboard-view.hidden{display:none}.keys{position:absolute;inset:18px;z-index:4}.key{position:absolute;border:1px solid #4a4b50;background:#0e0f11d9;color:#eee;border-radius:6px;min-width:35px;height:34px;display:flex;align-items:center;justify-content:center;padding:0 7px;font-size:9px;font-weight:900;cursor:pointer;box-shadow:0 5px 16px #0009;transition:.12s}.key:hover{border-color:#fff;background:#222329}.key.drop-target{border-color:#fff;background:#f0f0f0;color:#111;box-shadow:0 0 20px #fff6}.key.mapped{outline:1px solid #777}.key span{font-size:8px}.dragging{position:fixed!important;z-index:1000!important;pointer-events:none!important}.instructions{height:44px;display:flex;align-items:center;justify-content:center;border-top:1px solid #27282c;color:#767980;font-size:10px;gap:8px}.pill{border:1px solid #404146;border-radius:5px;padding:4px 7px;color:#ddd;background:#151619;font-weight:800}.bottom{height:54px;border-top:1px solid #28292d;background:#0d0e10;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:10px;color:#777}.bottom strong{color:#ddd}.actions{display:flex;gap:8px}.action{border:1px solid #45464b;background:#18191c;color:#ddd;border-radius:7px;padding:8px 14px;font-size:10px;font-weight:900;cursor:pointer}.action.primary{background:#eee;color:#111;border-color:#fff}.toast{position:fixed;right:20px;bottom:70px;background:#151619;border:1px solid #4a4b50;border-radius:8px;padding:10px 14px;font-size:10px;box-shadow:0 15px 40px #000;opacity:0;transform:translateY(8px);transition:.2s;z-index:200}.toast.show{opacity:1;transform:none}.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:300}.modal.show{display:flex}.modalbox{width:min(460px,92vw);background:#151619;border:1px solid #44464b;border-radius:12px;padding:22px;box-shadow:0 30px 100px #000}.modalbox h3{margin:0 0 7px;font-size:15px}.modalbox p{margin:0;color:#8e9096;font-size:10px;line-height:1.5}.close{margin-top:18px;border:1px solid #444;background:#222;color:#ddd;border-radius:7px;padding:8px 14px;cursor:pointer}@media(max-width:1050px){.workspace{grid-template-columns:1fr}.device-stage{min-height:520px}.mapping-board{min-height:650px}.right{min-height:700px}}@media(max-width:650px){.content{padding:10px}.top{padding:0 12px}.hint{display:none}.workspace{gap:10px}.device-stage{min-height:420px}.mapping-board{min-height:520px;padding:8px}.keys{inset:8px}.key{height:28px;min-width:28px;font-size:7px}.bottom{padding:0 10px}.bottom .status{display:none}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><div class="brand">87z <small>WARZONE MAPPING</small></div><div class="hint">Segure um botão do controle e arraste até a tecla desejada</div></div>
-  <div class="tabs"><button class="tab active" data-mode="keyboard">⌨ TECLADO</button><button class="tab" data-mode="mouse">🖱 MOUSE</button></div>
-  <div class="layout">
-    <section class="panel">
-      <div class="panel-head"><div><div class="panel-title">CONTROLE</div><div class="panel-sub">Passe o mouse sobre um botão para ver a função padrão do Warzone.</div></div><div id="selected" class="panel-sub">Nenhum selecionado</div></div>
-      <div class="stage"><div class="controller-wrap">
-        <img src="controller.png" alt="Controle Xbox 360 vermelho">
-        <button class="hotspot h-a" data-id="A"><span class="tip"><b>A</b><br>Interagir / Recarregar</span></button>
-        <button class="hotspot h-b" data-id="B"><span class="tip"><b>B</b><br>Agachar / Deslizar / Deitar</span></button>
-        <button class="hotspot h-x" data-id="X"><span class="tip"><b>X</b><br>Recarregar / Interagir</span></button>
-        <button class="hotspot h-y" data-id="Y"><span class="tip"><b>Y</b><br>Trocar arma</span></button>
-        <button class="hotspot h-lb" data-id="LB"><span class="tip"><b>LB</b><br>Equipamento tático</span></button>
-        <button class="hotspot h-rb" data-id="RB"><span class="tip"><b>RB</b><br>Equipamento letal</span></button>
-        <button class="hotspot h-lt" data-id="LT"><span class="tip"><b>LT</b><br>Mirar (ADS)</span></button>
-        <button class="hotspot h-rt" data-id="RT"><span class="tip"><b>RT</b><br>Atirar</span></button>
-        <button class="hotspot h-back" data-id="BACK"><span class="tip"><b>BACK</b><br>Mapa / Placar</span></button>
-        <button class="hotspot h-start" data-id="START"><span class="tip"><b>START</b><br>Menu</span></button>
-        <button class="hotspot h-guide" data-id="GUIDE"><span class="tip"><b>GUIDE</b><br>Menu do Xbox</span></button>
-        <button class="hotspot h-dpad-up" data-id="DPAD_UP"><span class="tip"><b>D-PAD ↑</b><br>Placas / equipamento</span></button><button class="hotspot h-dpad-down" data-id="DPAD_DOWN"><span class="tip"><b>D-PAD ↓</b><br>Placas / equipamento</span></button><button class="hotspot h-dpad-left" data-id="DPAD_LEFT"><span class="tip"><b>D-PAD ←</b><br>Seleção de equipamento</span></button><button class="hotspot h-dpad-right" data-id="DPAD_RIGHT"><span class="tip"><b>D-PAD →</b><br>Seleção de equipamento</span></button>
-        <button class="hotspot h-ls" data-id="LEFT_STICK"><span class="tip"><b>STICK ESQUERDO</b><br>Movimentação • Correr ao pressionar</span></button>
-        <button class="hotspot h-rs" data-id="RIGHT_STICK"><span class="tip"><b>STICK DIREITO</b><br>Câmera / Mira • Pressionar: corpo a corpo</span></button>
-      </div></div>
-    </section>
-
-    <section class="panel" id="keyboardPanel">
-      <div class="panel-head"><div><div class="panel-title">TECLADO</div><div class="panel-sub">Arraste um botão do controle e solte sobre uma tecla.</div></div><div class="panel-sub" id="mappingCount">0 mapeados</div></div>
-      <div class="keyboard">
-        <div class="keyboard-top"><div class="instruction">O mapeamento fica salvo neste navegador.</div></div>
-        <div class="key-area" id="keys"></div>
-      </div>
-    </section>
-
-    <section class="panel mouse-panel" id="mousePanel">
-      <div class="panel-head"><div><div class="panel-title">MOUSE</div><div class="panel-sub">Use os botões laterais do mouse como destino do mapeamento.</div></div></div>
-      <div class="mouse"><div class="mouse-shape"><span class="wheel">WHEEL</span><button class="mouse-btn m1" data-mouse="MOUSE 1">MOUSE 1</button><button class="mouse-btn m2" data-mouse="MOUSE 2">MOUSE 2</button><button class="mouse-btn mx2" data-mouse="MOUSE X2">MOUSE X2</button><button class="mouse-btn mx3" data-mouse="MOUSE X3">MOUSE X3</button></div></div>
-    </section>
-  </div>
-  <div class="bottom"><div class="status">Configuração base: <b>Warzone • teclado + mouse</b> · Você pode substituir qualquer tecla arrastando um botão do controle.</div><button class="apply" id="reset">Restaurar padrão</button></div>
+<header class="top"><div class="brand">87z <small>CONFIGURAÇÃO DE MAPEAMENTO</small></div><div class="hint">Segure um botão do controle e arraste até a tecla desejada.</div></header>
+<nav class="nav"><button class="active">MAPEAMENTO</button><button id="resetNav">RESTAURAR PADRÃO</button></nav>
+<main class="content">
+<section class="mapping-page">
+<div class="titlebar"><div><div class="title">CONTROLADOR + TECLADO</div><div class="subtitle">Passe o mouse sobre os botões do controle para ver a função no jogo.</div></div><div class="subtitle" id="mappedCount">0 mapeamentos</div></div>
+<div class="workspace">
+<section class="panel">
+<div class="panel-head"><h2>CONTROLE</h2><span>ARRASTE → TECLADO / MOUSE</span></div>
+<div class="device-stage">
+<img class="device-image" src="assets/controller.png" alt="Controle PlayStation em linhas brancas">
+<button class="hotspot h-dpad" data-control="D-PAD" data-default="↑ ↓ ← →" aria-label="D-Pad"><span class="tooltip"><b>D-PAD</b><small>Movimentação/seleção</small></span></button>
+<button class="hotspot h-ls" data-control="L3 / LEFT STICK" data-default="W A S D"><span class="tooltip"><b>LEFT STICK</b><small>Movimentação</small></span></button>
+<button class="hotspot h-rs" data-control="R3 / RIGHT STICK" data-default="MOUSE • CÂMERA"><span class="tooltip"><b>RIGHT STICK</b><small>Câmera</small></span></button>
+<button class="hotspot h-tri" data-control="TRIÂNGULO" data-default="E"><span class="tooltip"><b>TRIÂNGULO</b><small>Interagir</small></span></button>
+<button class="hotspot h-circle" data-control="CÍRCULO" data-default="C"><span class="tooltip"><b>CÍRCULO</b><small>Agachar / deslizar</small></span></button>
+<button class="hotspot h-cross" data-control="X" data-default="SPACE"><span class="tooltip"><b>X</b><small>Pular</small></span></button>
+<button class="hotspot h-square" data-control="QUADRADO" data-default="R"><span class="tooltip"><b>QUADRADO</b><small>Recarregar</small></span></button>
+<button class="hotspot h-l1" data-control="L1" data-default="Q"><span class="tooltip"><b>L1</b><small>Equipamento tático</small></span></button>
+<button class="hotspot h-r1" data-control="R1" data-default="G"><span class="tooltip"><b>R1</b><small>Equipamento letal</small></span></button>
+<button class="hotspot h-l2" data-control="L2" data-default="MOUSE 2"><span class="tooltip"><b>L2</b><small>Aim / mirar</small></span></button>
+<button class="hotspot h-r2" data-control="R2" data-default="MOUSE 1"><span class="tooltip"><b>R2</b><small>Atirar</small></span></button>
+<button class="hotspot h-share" data-control="SHARE" data-default="TAB"><span class="tooltip"><b>SHARE</b><small>Placar / menu</small></span></button>
+<button class="hotspot h-options" data-control="OPTIONS" data-default="ESC"><span class="tooltip"><b>OPTIONS</b><small>Menu</small></span></button>
+<button class="hotspot h-touch" data-control="TOUCHPAD" data-default="M"><span class="tooltip"><b>TOUCHPAD</b><small>Mapa / função</small></span></button>
+<button class="hotspot h-l3" data-control="L3" data-default="SHIFT"><span class="tooltip"><b>L3</b><small>Corrida</small></span></button>
+<button class="hotspot h-r3" data-control="R3" data-default="V"><span class="tooltip"><b>R3</b><small>Corpo a corpo</small></span></button>
+</div>
+</section>
+<section class="panel right">
+<div class="panel-head"><h2>TECLADO / MOUSE</h2><div class="device-tabs"><button class="active" data-view="keyboard">TECLADO</button><button data-view="mouse">MOUSE</button></div></div>
+<div class="mapping-board">
+<div class="keyboard-view" id="keyboardView"><img class="keyboard" src="assets/keyboard.jfif" alt="Teclado em linhas brancas"><div class="keys" id="keys"></div></div>
+<div class="mouse-view" id="mouseView"><img class="mouse-image" src="assets/mouse.jpg" alt="Mouse em linhas brancas"></div>
+</div>
+<div class="instructions"><span class="pill">SEGURE</span> um botão do controle <span>→</span> <span class="pill">ARRASTE</span> para uma tecla</div>
+</section>
+</div>
+</section>
+</main>
+<footer class="bottom"><div>87z • <strong>WEB DEMO / SIMULAÇÃO</strong> • As configurações ficam salvas neste navegador.</div><div class="actions"><button class="action" id="reset">Restaurar padrão</button><button class="action primary" id="save">Salvar configurações</button></div></footer>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const STORAGE='87z-new-mapping-v1';
-const defaults={A:'SPACE',B:'C',X:'R',Y:'1 / 2',LB:'Q',RB:'G',LT:'MOUSE 2',RT:'MOUSE 1',BACK:'TAB',START:'ESC',GUIDE:'F1',DPAD_UP:'3',DPAD_DOWN:'4',DPAD_LEFT:'5',DPAD_RIGHT:'6',LEFT_STICK:'W A S D',RIGHT_STICK:'MOUSE'};
-let mappings={...defaults,...JSON.parse(localStorage.getItem(STORAGE)||'{}')};
-let dragId=null;
-const rows=[
- ['ESC','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12'],
- ['`','1','2','3','4','5','6','7','8','9','0','-','=','BACKSPACE'],
- ['TAB','Q','W','E','R','T','Y','U','I','O','P','[',']','\\'],
- ['CAPS','A','S','D','F','G','H','J','K','L',';','\'','ENTER'],
- ['SHIFT','Z','X','C','V','B','N','M',',','.','/','SHIFT'],
- ['CTRL','WIN','ALT','SPACE','INS','DEL','UP','LEFT','DOWN','RIGHT']
+const keyRows=[
+['ESC','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12'],
+['`','1','2','3','4','5','6','7','8','9','0','-','=','BACK'],
+['TAB','Q','W','E','R','T','Y','U','I','O','P','[',']','\\'],
+['CAPS','A','S','D','F','G','H','J','K','L',';','\'','ENTER'],
+['SHIFT','Z','X','C','V','B','N','M',',','.','/','SHIFT'],
+['CTRL','WIN','ALT','SPACE','INS','DEL','UP','LEFT','DOWN','RIGHT']
 ];
-const functions={W:'Mover para frente',A:'Mover para esquerda',S:'Mover para trás',D:'Mover para direita',SPACE:'Pular / subir',SHIFT:'Correr / correr tático',C:'Agachar / deslizar',Z:'Deitar',E:'Interagir / usar',R:'Recarregar',Q:'Equipamento tático',G:'Equipamento letal',TAB:'Placar / mapa',M:'Mapa',ESC:'Menu',F:'Corpo a corpo',1:'Arma 1',2:'Arma 2',V:'Placa / armadura',X:'Trocar interação',F1:'Menu / função'};
-function norm(k){return k===' '?'SPACE':k}
-function keyClass(k){if(k==='SPACE')return 'key space';if(['BACKSPACE','ENTER','SHIFT','CAPS','TAB','CTRL'].includes(k))return 'key w2';return 'key'}
-function renderKeys(){const root=document.getElementById('keys');root.innerHTML='';rows.forEach(row=>{const r=document.createElement('div');r.className='row';row.forEach(k=>{const b=document.createElement('div');b.className=keyClass(k);b.dataset.key=k;b.textContent=k;b.title=functions[k]||k;b.addEventListener('dragover',e=>{e.preventDefault();b.classList.add('dragover')});b.addEventListener('dragleave',()=>b.classList.remove('dragover'));b.addEventListener('drop',e=>{e.preventDefault();b.classList.remove('dragover');if(dragId){mappings[dragId]=k;save();toast(dragId+' → '+k);dragId=null}});r.appendChild(b)});root.appendChild(r)});updateMapped();}
-function updateMapped(){document.getElementById('mappingCount').textContent=Object.keys(mappings).length+' mapeados';document.querySelectorAll('.hotspot').forEach(h=>h.draggable=true)}
-function save(){localStorage.setItem(STORAGE,JSON.stringify(mappings));renderKeys()}
-function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1300)}
-document.querySelectorAll('.hotspot').forEach(h=>{h.addEventListener('dragstart',e=>{dragId=h.dataset.id;e.dataTransfer.setData('text/plain',h.dataset.id);document.getElementById('selected').textContent='Arrastando: '+h.dataset.id});h.addEventListener('dragend',()=>{dragId=null;document.getElementById('selected').textContent='Nenhum selecionado'})});
-document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');const mouse=t.dataset.mode==='mouse';document.getElementById('keyboardPanel').style.display=mouse?'none':'block';document.getElementById('mousePanel').classList.toggle('active',mouse)});
-document.querySelectorAll('.mouse-btn').forEach(b=>{b.addEventListener('dragover',e=>{e.preventDefault();b.style.borderColor='var(--accent)'});b.addEventListener('dragleave',()=>b.style.borderColor='transparent');b.addEventListener('drop',e=>{e.preventDefault();b.style.borderColor='transparent';if(dragId){mappings[dragId]=b.dataset.mouse;save();toast(dragId+' → '+b.dataset.mouse);dragId=null}})});
-document.getElementById('reset').onclick=()=>{mappings={...defaults};save();toast('Mapeamento padrão restaurado')};
-renderKeys();
+const defaults={
+'D-PAD':'↑ ↓ ← →','L3 / LEFT STICK':'W A S D','R3 / RIGHT STICK':'MOUSE • CÂMERA','TRIÂNGULO':'E','CÍRCULO':'C','X':'SPACE','QUADRADO':'R','L1':'Q','R1':'G','L2':'MOUSE 2','R2':'MOUSE 1','SHARE':'TAB','OPTIONS':'ESC','TOUCHPAD':'M','L3':'SHIFT','R3':'V'
+};
+let mappings={...defaults};try{mappings={...mappings,...JSON.parse(localStorage.getItem('87z-theme-mappings')||'{}')} }catch(e){}
+const keyEl=document.getElementById('keys');
+const toast=document.getElementById('toast');
+let dragControl=null;
+function showToast(t){toast.textContent=t;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1700)}
+function save(){localStorage.setItem('87z-theme-mappings',JSON.stringify(mappings));render();showToast('Configuração salva.')}
+function render(){document.querySelectorAll('.hotspot').forEach(h=>{h.classList.toggle('selected',!!mappings[h.dataset.control])});document.getElementById('mappedCount').textContent=Object.keys(mappings).length+' mapeamentos';document.querySelectorAll('.key').forEach(k=>k.classList.remove('mapped'));Object.entries(mappings).forEach(([c,k])=>{const el=[...document.querySelectorAll('.key')].find(x=>x.dataset.key===k);if(el)el.classList.add('mapped')})}
+function makeKeys(){keyEl.innerHTML='';const rowHeights=[8,8,8,8,8,8];const top=[2,15,28,41,54,67];keyRows.forEach((row,ri)=>{const gap=4;let total=0;row.forEach(k=>{total+=k==='SPACE'?330:k==='SHIFT'?115:k==='BACK'||k==='ENTER'?85:52});total+=gap*(row.length-1);let x=(1000-total)/2;row.forEach(k=>{const b=document.createElement('button');b.className='key';b.dataset.key=k;b.textContent=k==='SPACE'?'SPACE':k;b.style.left=(x/10)+'%';b.style.top=top[ri]+'%';b.style.width=((k==='SPACE'?330:k==='SHIFT'?115:k==='BACK'||k==='ENTER'?85:52)/10)+'%';b.style.height='9%';b.addEventListener('dragover',e=>{e.preventDefault();b.classList.add('drop-target')});b.addEventListener('dragleave',()=>b.classList.remove('drop-target'));b.addEventListener('drop',e=>{e.preventDefault();b.classList.remove('drop-target');if(dragControl){mappings[dragControl]=k;save();dragControl=null}});x+=k==='SPACE'?330:k==='SHIFT'?115:k==='BACK'||k==='ENTER'?85:52; x+=gap});});render()}
+function startDrag(control){dragControl=control;document.body.classList.add('dragging-controller');showToast('Arraste '+control+' para uma tecla.');}
+document.querySelectorAll('.hotspot').forEach(h=>{h.addEventListener('mousedown',e=>{e.preventDefault();startDrag(h.dataset.control)});h.addEventListener('touchstart',e=>{e.preventDefault();startDrag(h.dataset.control)},{passive:false})});
+document.addEventListener('mouseup',()=>{if(dragControl){dragControl=null;document.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'))}});
+document.querySelectorAll('.device-tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.device-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const mouse=b.dataset.view==='mouse';document.getElementById('keyboardView').classList.toggle('hidden',mouse);document.getElementById('mouseView').classList.toggle('active',mouse)});
+function reset(){mappings={...defaults};localStorage.removeItem('87z-theme-mappings');render();showToast('Mapeamento padrão restaurado.')}
+document.getElementById('reset').onclick=reset;document.getElementById('resetNav').onclick=reset;document.getElementById('save').onclick=save;makeKeys();
 </script>
-</body></html>
+</body>
+</html>

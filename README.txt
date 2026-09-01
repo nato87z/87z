@@ -1,14 +1,11 @@
-87z — Atualização
+87z — Web Demo
+Abra index.html no navegador.
 
-Inclui:
-- fundo branco removido da imagem do controle;
-- visual de mapeamento com caixas pequenas e linhas pontilhadas;
-- Debug escondido;
-- página Macros com Slide Cancel;
-- Slide Cancel ON/OFF;
-- acionador do Slide Cancel vinculado automaticamente ao botão B;
-- salvamento das configurações no navegador;
+Esta versão é uma demonstração visual local:
+- mapeamento de botões com teclado/mouse;
 - WASD fixo no analógico esquerdo;
-- mouse/câmera no analógico direito.
+- mouse simulado no analógico direito;
+- configurações salvas no localStorage;
+- páginas Dashboard, Remapear, Macros e Debug.
 
-A versão WEB continua sendo uma SIMULAÇÃO. A execução nativa do macro e o controle virtual real serão implementados na versão Windows.
+IMPORTANTE: esta versão WEB NÃO cria um controle virtual real no Windows.
