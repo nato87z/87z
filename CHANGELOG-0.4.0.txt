@@ -11,6 +11,7 @@ CONTROLE VIRTUAL
 - F8 definido como atalho padrão, inclusive com o aplicativo minimizado.
 - ViGEmBus permanece como o único driver necessário.
 - Quando não estiver instalado, o próprio 87Z baixa o instalador oficial e abre a instalação do Windows.
+- O componente cliente é obtido do pacote oficial no primeiro uso e verificado por SHA-256, sem ser republicado no instalador.
 
 INTERFACE
 - Área de macros/treino removida.

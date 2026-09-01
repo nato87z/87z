@@ -2,9 +2,14 @@
 
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
+const crypto = require('crypto');
 const { spawn } = require('child_process');
 const { uIOhook } = require('uiohook-napi');
 const { KEY_CODES, keyTarget, mouseTarget, axisFromKeys } = require('./input-utils');
+
+const VIGEM_CLIENT_URL = 'https://unpkg.com/vigemclient@1.5.3/native/x64/ViGEmClient.dll';
+const VIGEM_CLIENT_SHA256 = '96b3e40f6ef9e2698d7bb37d0a20fd77ad947714c3463b986580d3b307b3a1ca';
 
 const DEFAULT_ENGINE = {
   axisX: 5000, axisY: 5000, curveH: 0.9, curveV: 1.1,
@@ -26,9 +31,10 @@ const CONTROL_TO_X360 = {
 };
 
 class VirtualController {
-  constructor(onStatus, onInput) {
+  constructor(onStatus, onInput, options={}) {
     this.onStatus = onStatus || (() => {});
     this.onInput = onInput || (() => {});
+    this.dataDir = options.dataDir || __dirname;
     this.helper = null; this.helperReady = false; this.running = false; this.stopping = false; this.restartTimer = null;
     this.mappings = {}; this.engine = { ...DEFAULT_ENGINE };
     this.keysDown = new Set(); this.mouseButtonsDown = new Set(); this.hooksInstalled = false; this.heartbeatTimer = null;
@@ -43,21 +49,45 @@ class VirtualController {
     if (this.running) return;
     this.running = true;
     this.stopping = false;
-    this.startViGEmHelper();
+    this.startViGEmHelper().catch(error=>this.onStatus({connected:false,error:'Não foi possível preparar o componente do controle virtual: '+error.message}));
     this.installHooks();
     this.decayTimer = setInterval(() => this.tickRightStick(), 8);
     this.heartbeatTimer = setInterval(() => this.sendReport(), 250);
   }
 
-  startViGEmHelper() {
+  fileSha256(file) { return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'); }
+
+  downloadClient(url,target,redirects=0) {
+    return new Promise((resolve,reject)=>{
+      const request=https.get(url,{headers:{'User-Agent':'87Z-App/0.4.0'}},response=>{
+        if(response.statusCode>=300&&response.statusCode<400&&response.headers.location&&redirects<6){response.resume();return resolve(this.downloadClient(new URL(response.headers.location,url).toString(),target,redirects+1));}
+        if(response.statusCode!==200){response.resume();return reject(new Error(`download respondeu ${response.statusCode}`));}
+        const temp=target+'.download';const output=fs.createWriteStream(temp);response.pipe(output);
+        output.on('finish',()=>output.close(()=>{try{if(this.fileSha256(temp)!==VIGEM_CLIENT_SHA256)throw new Error('componente recebido não passou na verificação de segurança');fs.renameSync(temp,target);resolve(target);}catch(error){try{fs.unlinkSync(temp);}catch(_){}reject(error);}}));
+        output.on('error',reject);response.on('error',reject);
+      });
+      request.setTimeout(30000,()=>request.destroy(new Error('tempo de download esgotado')));request.on('error',reject);
+    });
+  }
+
+  async ensureViGEmClient() {
+    const runtimeDir=path.join(this.dataDir,'runtime');fs.mkdirSync(runtimeDir,{recursive:true});
+    const dll=path.join(runtimeDir,'ViGEmClient.dll');
+    if(fs.existsSync(dll)&&this.fileSha256(dll)===VIGEM_CLIENT_SHA256)return dll;
+    try{if(fs.existsSync(dll))fs.unlinkSync(dll);}catch(_){}
+    this.onStatus({connected:false,message:'Baixando o componente oficial do controle virtual…'});
+    return this.downloadClient(VIGEM_CLIENT_URL,dll);
+  }
+
+  async startViGEmHelper() {
     if (process.platform !== 'win32') {
       this.onStatus({ connected:false, error:'O emulador Xbox 360 só funciona no Windows.' });
       return;
     }
     const helper = path.join(__dirname, 'vigem-helper.ps1');
-    const dll = path.join(__dirname, 'ViGEmClient.dll');
+    const dll = await this.ensureViGEmClient();
+    if(!this.running||this.stopping)return;
     if (!fs.existsSync(helper)) return this.onStatus({ connected:false, error:'vigem-helper.ps1 não encontrado.' });
-    if (!fs.existsSync(dll)) return this.onStatus({ connected:false, error:'ViGEmClient.dll não encontrado. Rode npm install novamente.' });
 
     this.helper = spawn('powershell.exe', [
       '-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',helper,'-DllPath',dll
@@ -97,7 +127,7 @@ class VirtualController {
       this.onStatus({connected:false, reconnecting:true, error:detail || `Backend ViGEm encerrou (código ${code}). Tentando reconectar...`});
       clearTimeout(this.restartTimer);
       this.restartTimer = setTimeout(() => {
-        if (this.running && !this.stopping) this.startViGEmHelper();
+        if (this.running && !this.stopping) this.startViGEmHelper().catch(error=>this.onStatus({connected:false,error:'Falha ao reconectar: '+error.message}));
       }, 1200);
     });
     this.helper.on('close', () => {

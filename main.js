@@ -144,7 +144,7 @@ function createWindow() {
   });
   mainWindow.loadFile(path.join(__dirname,'index.html'));
   mainWindow.webContents.setWindowOpenHandler(()=>({action:'deny'}));
-  virtualController = new VirtualController(status=>send('87z:virtual-status',status),input=>send('87z:virtual-input',input));
+  virtualController = new VirtualController(status=>send('87z:virtual-status',status),input=>send('87z:virtual-input',input),{dataDir:app.getPath('userData')});
   mainWindow.on('closed',()=>{virtualController?.stop();virtualController=null;mainWindow=null;});
 }
 
