@@ -1,0 +1,69 @@
+{
+  "name": "87z-windows-app",
+  "version": "0.4.0",
+  "description": "87Z Windows virtual Xbox 360 controller emulator via ViGEmBus",
+  "main": "main.js",
+  "author": "87Z",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test-input-logic.js && node test-interface.js",
+    "build": "electron-builder --win",
+    "build:portable": "electron-builder --win zip --x64",
+    "postinstall": "node scripts/ensure-vigem-client.js",
+    "test-vigem": "node test-vigem.js",
+    "diagnose-vigem": "powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -File diagnose-vigem.ps1",
+    "test-xinput-report": "node test-vigem.js",
+    "test-input-real": "node test-input-real.js",
+    "test-input-logic": "node test-input-logic.js",
+    "test-interface": "node test-interface.js"
+  },
+  "devDependencies": {
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "electron-updater": "6.8.9",
+    "uiohook-napi": "1.5.4"
+  },
+  "build": {
+    "appId": "com.87z.app",
+    "productName": "87Z",
+    "files": [
+      "index.html",
+      "styles.css",
+      "styles-fixes.css",
+      "renderer.js",
+      "main.js",
+      "preload.js",
+      "update-config.json",
+      "test-vigem.js",
+      "virtual-controller.js",
+      "input-utils.js",
+      "test-input-logic.js",
+      "test-interface.js",
+      "ViGEmClient.dll",
+      "vigem-helper.ps1",
+      "assets/**/*",
+      "scripts/**/*",
+      "diagnose-vigem.ps1"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "nato87z",
+      "repo": "87z",
+      "releaseType": "release"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "asar": false
+  }
+}

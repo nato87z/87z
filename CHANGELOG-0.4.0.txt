@@ -1,0 +1,23 @@
+87Z 0.4.0
+
+MAPEAMENTO
+- D-pad completo com quatro direções mapeáveis separadamente.
+- Setas do teclado configuradas como padrão para o D-pad.
+- Áreas do controle, teclado e mouse alinhadas e sem sobreposição.
+- Imagem do controle permanece estática durante as entradas.
+
+CONTROLE VIRTUAL
+- Atalho global configurável para ligar/desligar o controle virtual.
+- F8 definido como atalho padrão, inclusive com o aplicativo minimizado.
+- ViGEmBus permanece como o único driver necessário.
+- Quando não estiver instalado, o próprio 87Z baixa o instalador oficial e abre a instalação do Windows.
+
+INTERFACE
+- Área de macros/treino removida.
+- Referências, diagnóstico e integração com DS4Windows removidos.
+
+ATUALIZAÇÕES
+- Verificação automática ao iniciar a versão instalada.
+- Download automático de versões novas.
+- Aviso quando a atualização estiver pronta para instalar e reiniciar.
+- Configurações do usuário preservadas entre as versões.

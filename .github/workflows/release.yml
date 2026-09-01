@@ -1,0 +1,39 @@
+name: Publicar atualização do 87Z
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/configure-release.js
+      - run: npm test
+      - run: npx electron-builder --win --x64 --publish never --config.publish.provider=github
+      - name: Guardar instalador do Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: 87Z-Windows-Installer
+          path: dist/*.exe
+          if-no-files-found: error
+      - name: Publicar arquivos da atualização
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = node -p "require('./package.json').version"
+          $tag = "v$version"
+          $files = Get-ChildItem dist -File | Where-Object { $_.Extension -in '.exe','.yml','.blockmap' }
+          gh release create $tag $files.FullName --target $env:GITHUB_SHA --title "87Z $tag" --generate-notes

@@ -1,170 +1,120 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>87z — Configuração de Mapeamento</title>
-<style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#090a0b;color:#f2f2f2;font-family:Inter,Segoe UI,Arial,sans-serif}body{background:radial-gradient(circle at 50% 8%,#18191b 0,#0c0d0f 48%,#070809 100%);overflow-x:hidden}button{font:inherit}.app{min-height:100vh;display:flex;flex-direction:column}.top{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid #27282b;background:#0d0e10}.brand{font-weight:900;letter-spacing:1px}.brand small{font-size:10px;color:#707278;margin-left:8px;font-weight:600}.hint{font-size:11px;color:#85878c}.nav{height:48px;display:flex;align-items:center;justify-content:center;gap:8px;border-bottom:1px solid #242529;background:#0d0e10}.nav button{border:1px solid transparent;background:transparent;color:#8c8e94;padding:8px 24px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:800}.nav button.active{background:#ededed;color:#111;border-color:#fff}.content{flex:1;padding:18px 24px 28px}.mapping-page{max-width:1500px;margin:0 auto}.titlebar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px}.title{font-size:18px;font-weight:900;letter-spacing:.8px}.subtitle{font-size:10px;color:#777a80;margin-top:4px}.workspace{display:grid;grid-template-columns:minmax(480px,1fr) minmax(650px,1.25fr);gap:14px;min-height:700px}.panel{border:1px solid #2b2c30;border-radius:12px;background:rgba(13,14,16,.9);box-shadow:0 20px 60px #0008;overflow:hidden}.panel-head{height:48px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #292a2e}.panel-head h2{font-size:12px;margin:0;letter-spacing:1px}.panel-head span{font-size:9px;color:#686a70}.device-stage{height:calc(100% - 48px);min-height:650px;display:flex;align-items:center;justify-content:center;padding:22px}.device-canvas{position:relative;width:min(100%,850px);aspect-ratio:1181/896}.device-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 25px 35px #0009);mix-blend-mode:screen;user-select:none;pointer-events:none}.hotspot{position:absolute;border:0;background:transparent;border-radius:0;cursor:grab;z-index:5;padding:0;touch-action:none;transition:none}.hotspot:hover{border:0;background:transparent;box-shadow:none}.hotspot.selected{border:0;background:transparent;box-shadow:none}.hotspot:active{cursor:grabbing}.hotspot.fixed-stick{cursor:default}.hotspot.fixed-stick:hover{border:0;background:transparent;box-shadow:none}.hotspot.fixed-stick:active{cursor:default}.tooltip{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);min-width:150px;padding:8px 10px;border:1px solid #44464b;border-radius:7px;background:#101114;box-shadow:0 12px 30px #000;opacity:0;pointer-events:none;transition:.12s;text-align:center;white-space:nowrap}.hotspot:hover .tooltip{opacity:1}.tooltip{color:#fff!important}.tooltip *{color:#fff!important}.tooltip b{display:block;font-size:10px;color:#fff!important}.tooltip small{display:block;color:#fff!important;font-size:9px;margin-top:3px}.h-dpad{left:17.8%;top:34.5%;width:14%;height:18%}.h-ls{left:31.2%;top:51.2%;width:12.5%;height:16%}.h-rs{left:56.8%;top:51.2%;width:12.5%;height:16%}.h-tri{left:70.6%;top:30.5%;width:7%;height:7%}.h-circle{left:77.0%;top:38.8%;width:7%;height:7%}.h-cross{left:70.5%;top:48.0%;width:7%;height:7%}.h-square{left:64.1%;top:38.8%;width:7%;height:7%}.h-l1{left:24.3%;top:26.2%;width:5%;height:7%}.h-r1{left:69.3%;top:26.2%;width:5%;height:7%}.h-l2{left:18.2%;top:15.5%;width:12%;height:11%}.h-r2{left:70.2%;top:15.5%;width:12%;height:11%}.h-share{left:47.0%;top:51.8%;width:5.5%;height:5.5%}.h-options{left:65.7%;top:26.0%;width:5.2%;height:6%}.h-touch{left:34.0%;top:24.0%;width:32%;height:24%}.h-l3{left:33.2%;top:51.5%;width:7%;height:7%}.h-r3{left:59.0%;top:51.5%;width:7%;height:7%}.right{display:flex;flex-direction:column;min-width:0}.device-tabs{display:flex;gap:6px}.device-tabs button{border:1px solid #36373b;background:#141519;color:#8e9096;border-radius:7px;padding:6px 12px;font-size:9px;font-weight:900;cursor:pointer}.device-tabs button.active{background:#eee;color:#111}.mapping-board{position:relative;height:calc(100% - 48px);min-height:650px;padding:18px;overflow:hidden}.keyboard-view{position:absolute;inset:18px;display:flex;align-items:center;justify-content:center}.keyboard-canvas{position:relative;width:min(100%,calc((100vh - 180px)*1.318));max-width:100%;aspect-ratio:1181/896;flex:0 1 auto}.keyboard-view.hidden{display:none}.keyboard{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 20px 35px #0009);mix-blend-mode:screen;user-select:none;pointer-events:none}.keys{position:absolute;inset:0;z-index:4}.key{position:absolute;border:0;background:transparent;color:transparent;border-radius:6px;min-width:30px;height:34px;display:flex;align-items:center;justify-content:center;padding:0;font-size:9px;font-weight:900;cursor:default;box-shadow:none;transition:.12s;overflow:visible}.key:hover{border:1px solid transparent;background:transparent;box-shadow:none}.key.drop-target{border:1px solid #fff;background:#ffffff18;color:#fff;box-shadow:0 0 22px #fff8;transform:scale(1.02)}.key.mapped{border:0;background:transparent;color:#fff}.key-label{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;gap:0;width:100%;height:100%}.key-label .key-name{display:none}.key-label .mapped-control{font-size:9px;color:#fff;background:rgba(20,21,24,.88);border:1px solid #777;padding:4px 7px;border-radius:5px;max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 1px 2px #000}.key:not(.mapped) .key-label .mapped-control{display:none}.mouse-view{position:absolute;inset:18px;display:none;align-items:center;justify-content:center}.mouse-view.active{display:flex}.mouse-canvas{position:relative;width:min(78%,620px);aspect-ratio:1080/819}.mouse-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:screen;filter:drop-shadow(0 20px 35px #0009)}.mouse-hotspot{position:absolute;border:0;background:transparent;border-radius:14px;z-index:5;cursor:default;transition:.12s}.mouse-hotspot.drop-target{border:1px solid #fff;background:#fff2;box-shadow:0 0 26px #fff8}.mouse-hotspot.mapped{border:0;background:transparent}.mouse-hotspot .mouse-label{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:9px;font-weight:900;text-shadow:0 1px 3px #000;pointer-events:none}.mouse-hotspot.mapped .mouse-label{display:flex;background:#202126dd;border-radius:7px;inset:15%;border:1px solid #777}.m-left{left:32%;top:15%;width:17%;height:24%}.m-right{left:51%;top:15%;width:17%;height:24%}.m-wheel{left:47%;top:5%;width:7%;height:11%}.m-side1{left:32%;top:47%;width:10%;height:13%}.m-side2{left:32%;top:61%;width:10%;height:13%}.instructions{height:44px;display:flex;align-items:center;justify-content:center;border-top:1px solid #27282c;color:#767980;font-size:10px;gap:8px}.pill{border:1px solid #404146;border-radius:5px;padding:4px 7px;color:#ddd;background:#151619;font-weight:800}.bottom{height:54px;border-top:1px solid #28292d;background:#0d0e10;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:10px;color:#777}.bottom strong{color:#ddd}.actions{display:flex;gap:8px}.action{border:1px solid #45464b;background:#18191c;color:#ddd;border-radius:7px;padding:8px 14px;font-size:10px;font-weight:900;cursor:pointer}.action.primary{background:#eee;color:#111;border-color:#fff}.toast{position:fixed;right:20px;bottom:70px;background:#151619;border:1px solid #4a4b50;border-radius:8px;padding:10px 14px;font-size:10px;box-shadow:0 15px 40px #000;opacity:0;transform:translateY(8px);transition:.2s;z-index:2000}.toast.show{opacity:1;transform:none}.drag-ghost{position:fixed;z-index:5000;pointer-events:none;padding:8px 12px;border:1px solid #fff;border-radius:7px;background:#151619eF;color:#fff;font-size:10px;font-weight:900;box-shadow:0 10px 35px #000}.drag-line{position:fixed;z-index:4999;pointer-events:none;overflow:visible}.drag-line line{stroke:#fff;stroke-width:1.5;stroke-dasharray:5 5;filter:drop-shadow(0 0 5px #fff)}@media(max-width:1100px){.workspace{grid-template-columns:1fr}.device-stage{min-height:560px}.mapping-board{min-height:650px}.right{min-height:700px}}@media(max-width:650px){.content{padding:10px}.top{padding:0 12px}.hint{display:none}.workspace{gap:10px}.device-stage{min-height:430px;padding:8px}.mapping-board{min-height:520px;padding:8px}.keyboard-view,.mouse-view{inset:8px}.key{height:28px;min-width:26px;font-size:7px}.bottom{padding:0 10px}.bottom .status{display:none}.mouse-canvas{width:90%}}
-
-/* Input Engine / Macros */
-.engine-page{max-width:1100px;margin:0 auto;display:none}.engine-page.active{display:block}.engine-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:14px}.field label{display:block;font-size:9px;color:#8e9096;font-weight:900;letter-spacing:.8px;margin-bottom:6px}.field input{width:100%;height:38px;border:1px solid #4a4b50;border-radius:8px;background:#111216;color:#fff;padding:0 11px;font-weight:800;outline:none}.field input:focus{border-color:#fff;box-shadow:0 0 0 2px #fff2}.help{border:1px solid #34363a;border-radius:9px;background:#101115;padding:13px;color:#b7b9bf;font-size:10px;line-height:1.55}.help strong{color:#fff}.engine-test{height:260px;position:relative;border:1px solid #34363a;border-radius:10px;background:radial-gradient(circle at center,#18191d,#0b0c0e);overflow:hidden;cursor:crosshair}.engine-test .cross{position:absolute;left:50%;top:50%;width:1px;height:100%;background:#2d2f34}.engine-test .cross:after{content:"";position:absolute;left:-50vw;top:50%;width:100vw;height:1px;background:#2d2f34}.camera-dot{position:absolute;left:50%;top:50%;width:12px;height:12px;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 18px #fff8;pointer-events:none}.engine-readout{margin-top:8px;font-size:9px;color:#777a80}.macro-list{display:grid;gap:10px}.macro-card{border:1px solid #303136;border-radius:10px;padding:16px;background:#101115;display:flex;align-items:center;justify-content:space-between}.macro-card h3{margin:0;font-size:12px}.macro-card p{margin:5px 0 0;color:#777a80;font-size:9px}.toggle{width:48px;height:26px;border:1px solid #555;border-radius:20px;background:#25262a;padding:3px;cursor:pointer}.toggle i{display:block;width:18px;height:18px;border-radius:50%;background:#ddd;transition:.15s}.toggle.on{background:#fff;border-color:#fff}.toggle.on i{transform:translateX(20px);background:#111}.page-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.nav button{white-space:nowrap}.key:hover,.mouse-hotspot:hover{background:#fff2!important;border-color:#fff!important;box-shadow:0 0 18px #fff8!important;color:#111}.key:hover .mapped-control{background:#fff;color:#111;border-color:#fff;text-shadow:none}.mouse-hotspot:hover .mouse-label{background:#fff;color:#111;border-color:#fff;text-shadow:none}.mouse-hotspot .mouse-label{font-size:0}.mouse-hotspot.mapped .mouse-label{font-size:10px}.engine-note{font-size:9px;color:#777a80;margin-top:10px}
-@media(max-width:800px){.engine-grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>87Z — Controle Virtual</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-fixes.css">
 </head>
 <body>
-<div class="app">
-<header class="top"><div class="brand">87z <small>CONFIGURAÇÃO DE MAPEAMENTO</small></div><div class="hint">Segure um botão do controle e arraste até uma tecla ou botão do mouse.</div></header>
-<nav class="nav">
-<button class="active" data-page="mappingPage">MAPEAMENTO</button>
-<button data-page="enginePage">INPUT ENGINE</button>
-<button data-page="macroPage">MACROS</button>
-<button id="resetNav">RESTAURAR PADRÃO</button>
-</nav>
-<main class="content"><section class="mapping-page" id="mappingPage">
-<div class="titlebar"><div><div class="title">CONTROLADOR + TECLADO / MOUSE</div><div class="subtitle">Passe o mouse sobre um botão do controle para ver a função. Segure e arraste para mapear.</div></div><div class="actions"><div class="subtitle" id="mappedCount">0 mapeamentos</div><button class="action primary" id="saveMappingTop">Salvar configurações</button></div></div>
-<div class="workspace">
-<section class="panel"><div class="panel-head"><h2>CONTROLE</h2><span>SEGURE + ARRASTE →</span></div><div class="device-stage"><div class="device-canvas" id="controllerCanvas">
-<img class="device-image" src="assets/controller.png" alt="Controle em linhas brancas">
-<button class="hotspot h-dpad" data-control="D-PAD"><span class="tooltip"><b>D-PAD</b><small>Trocar equipamento / seleção</small></span></button>
-<button class="hotspot h-ls" data-control="L3 / LEFT STICK"><span class="tooltip"><b>LEFT STICK</b><small>Movimentação • WASD (fixo)</small></span></button>
-<button class="hotspot h-rs" data-control="R3 / RIGHT STICK"><span class="tooltip"><b>RIGHT STICK</b><small>Câmera • Mouse (fixo)</small></span></button>
-<button class="hotspot h-tri" data-control="TRIÂNGULO"><span class="tooltip"><b>TRIÂNGULO</b><small>Usar / interagir</small></span></button>
-<button class="hotspot h-circle" data-control="CÍRCULO"><span class="tooltip"><b>CÍRCULO</b><small>Agachar / deslizar</small></span></button>
-<button class="hotspot h-cross" data-control="X"><span class="tooltip"><b>X</b><small>Pular / subir</small></span></button>
-<button class="hotspot h-square" data-control="QUADRADO"><span class="tooltip"><b>QUADRADO</b><small>Recarregar / interagir</small></span></button>
-<button class="hotspot h-l1" data-control="L1"><span class="tooltip"><b>L1</b><small>Equipamento tático</small></span></button>
-<button class="hotspot h-r1" data-control="R1"><span class="tooltip"><b>R1</b><small>Equipamento letal</small></span></button>
-<button class="hotspot h-l2" data-control="L2"><span class="tooltip"><b>L2</b><small>Aim / mirar</small></span></button>
-<button class="hotspot h-r2" data-control="R2"><span class="tooltip"><b>R2</b><small>Atirar</small></span></button>
-<button class="hotspot h-share" data-control="SHARE"><span class="tooltip"><b>SHARE</b><small>Placar</small></span></button>
-<button class="hotspot h-options" data-control="OPTIONS"><span class="tooltip"><b>OPTIONS</b><small>Menu</small></span></button>
-<button class="hotspot h-touch" data-control="TOUCHPAD"><span class="tooltip"><b>TOUCHPAD</b><small>Mapa / função</small></span></button>
-<button class="hotspot h-l3" data-control="L3"><span class="tooltip"><b>L3</b><small>Correr</small></span></button>
-<button class="hotspot h-r3" data-control="R3"><span class="tooltip"><b>R3</b><small>Corpo a corpo</small></span></button>
-</div></div></section>
-<section class="panel right"><div class="panel-head"><h2>TECLADO / MOUSE</h2><div class="device-tabs"><button class="active" data-view="keyboard">TECLADO</button><button data-view="mouse">MOUSE</button></div></div>
-<div class="mapping-board">
-<div class="keyboard-view" id="keyboardView"><div class="keyboard-canvas"><img class="keyboard" src="assets/keyboard.jfif" alt="Teclado em linhas brancas"><div class="keys" id="keys"></div></div></div>
-<div class="mouse-view" id="mouseView"><div class="mouse-canvas"><img class="mouse-image" src="assets/mouse.jpg" alt="Mouse em linhas brancas">
-<div class="mouse-hotspot m-left" data-target="MOUSE 1"><span class="mouse-label">MOUSE 1</span></div><div class="mouse-hotspot m-right" data-target="MOUSE 2"><span class="mouse-label">MOUSE 2</span></div><div class="mouse-hotspot m-wheel" data-target="MOUSE 3"><span class="mouse-label">MOUSE 3</span></div><div class="mouse-hotspot m-side1" data-target="MOUSE X1"><span class="mouse-label">MOUSE X1</span></div><div class="mouse-hotspot m-side2" data-target="MOUSE X2"><span class="mouse-label">MOUSE X2</span></div>
-</div></div></div>
-<div class="instructions"><span class="pill">SEGURE</span> um botão do controle <span>→</span> <span class="pill">ARRASTE</span> para uma tecla ou botão do mouse</div></section>
-</div></section>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand"><span>87Z</span><small>CONTROLE VIRTUAL</small></div>
+    <div class="top-actions">
+      <span class="version-chip" id="versionChip">VERSÃO —</span>
+      <button class="virtual-toggle on" id="virtualToggle" aria-pressed="true"><i></i><span>CONTROLE: ATIVO</span></button>
+    </div>
+  </header>
 
-<section class="engine-page" id="enginePage">
-<div class="titlebar"><div><div class="title">INPUT ENGINE</div><div class="subtitle">Ajuste a resposta do movimento horizontal e vertical da câmera dentro do aplicativo.</div></div><div class="subtitle">CONFIGURAÇÕES SALVAS NESTE NAVEGADOR</div></div>
-<div class="engine-grid">
-<section class="panel"><div class="panel-head"><h2>SENSIBILIDADES DO CONTROLE</h2><span>AJUSTE FINO</span></div><div style="padding:18px">
-<div class="engine-grid">
-<div class="field"><label>EIXO X</label><input id="axisX" type="number" step="1" min="0" value="5000"></div>
-<div class="field"><label>EIXO Y</label><input id="axisY" type="number" step="1" min="0" value="5000"></div>
-<div class="field"><label>CURVA H</label><input id="curveH" type="number" step="0.1" value="0.9"></div>
-<div class="field"><label>CURVA V</label><input id="curveV" type="number" step="0.1" value="1.1"></div>
-<div class="field"><label>FILTRO H</label><input id="filterH" type="number" step="0.1" min="0" value="0.4"></div>
-<div class="field"><label>FILTRO V</label><input id="filterV" type="number" step="0.1" min="0" value="0.5"></div>
-<div class="field" style="grid-column:1/-1"><label>ACELERAÇÃO GLOBAL</label><input id="accel" type="number" step="0.1" min="0" value="0.5"></div>
+  <nav class="nav" aria-label="Navegação principal">
+    <button class="active" data-page="mappingPage">MAPEAMENTO</button>
+    <button data-page="enginePage">INPUT ENGINE</button>
+    <button data-page="systemPage">SISTEMA</button>
+    <button id="resetNav">RESTAURAR PADRÃO</button>
+  </nav>
+
+  <main class="content">
+    <section class="page active" id="mappingPage">
+      <div class="titlebar">
+        <div><h1>CONTROLADOR + TECLADO / MOUSE</h1><p>Arraste um botão do controle para a tecla desejada. A imagem permanece estática durante o uso.</p></div>
+        <div class="title-actions"><span id="mappedCount">0 mapeamentos</span><button class="action primary" id="saveMappingTop">SALVAR</button></div>
+      </div>
+
+      <div class="mapping-grid">
+        <section class="panel controller-panel">
+          <header class="panel-head"><h2>CONTROLE</h2><div class="device-status" id="gamepadStatus"><i></i><span>INICIALIZANDO</span></div></header>
+          <div class="controller-stage">
+            <div class="controller-canvas" id="controllerCanvas">
+              <img class="controller-image" src="assets/controller.png" alt="Controle em linhas brancas">
+              <button class="control-zone dpad-zone h-dpad-up" data-control="D-UP" title="Direcional para cima — normalmente usado para marcar/pingar"><span>D-PAD CIMA • MARCAR</span></button>
+              <button class="control-zone dpad-zone h-dpad-left" data-control="D-LEFT" title="Direcional para a esquerda — normalmente usado para alterar modo de disparo"><span>D-PAD ESQUERDA • MODO DE DISPARO</span></button>
+              <button class="control-zone dpad-zone h-dpad-right" data-control="D-RIGHT" title="Direcional para a direita — normalmente usado para séries de baixas"><span>D-PAD DIREITA • SÉRIE DE BAIXAS</span></button>
+              <button class="control-zone dpad-zone h-dpad-down" data-control="D-DOWN" title="Direcional para baixo — normalmente usado para mochila/inventário"><span>D-PAD BAIXO • INVENTÁRIO</span></button>
+              <button class="control-zone h-l2" data-control="L2"><span>L2 • MIRAR</span></button>
+              <button class="control-zone h-r2" data-control="R2"><span>R2 • ATIRAR</span></button>
+              <button class="control-zone h-l1" data-control="L1"><span>L1 • TÁTICO</span></button>
+              <button class="control-zone h-r1" data-control="R1"><span>R1 • LETAL</span></button>
+              <button class="control-zone h-share" data-control="SHARE"><span>SHARE</span></button>
+              <button class="control-zone h-options" data-control="OPTIONS"><span>OPTIONS</span></button>
+              <button class="control-zone h-touch" data-control="TOUCHPAD"><span>TOUCHPAD</span></button>
+              <button class="control-zone h-tri" data-control="TRIÂNGULO"><span>TRIÂNGULO</span></button>
+              <button class="control-zone h-circle" data-control="CÍRCULO"><span>CÍRCULO</span></button>
+              <button class="control-zone h-cross" data-control="X"><span>X</span></button>
+              <button class="control-zone h-square" data-control="QUADRADO"><span>QUADRADO</span></button>
+              <button class="control-zone h-l3" data-control="L3"><span>L3 • CORRER</span></button>
+              <button class="control-zone h-r3" data-control="R3"><span>R3 • CORPO A CORPO</span></button>
+            </div>
+            <div class="readout" id="gamepadReadout">O aplicativo cria um controle Xbox 360 virtual.</div>
+          </div>
+        </section>
+
+        <section class="panel input-panel">
+          <header class="panel-head"><h2>TECLADO / MOUSE</h2><div class="tabs"><button class="active" data-input-view="keyboard">TECLADO</button><button data-input-view="mouse">MOUSE</button></div></header>
+          <div class="input-stage">
+            <div class="keyboard-board" id="keyboardView"><div class="keyboard-inner" id="keyboard"></div></div>
+            <div class="mouse-board hidden" id="mouseView">
+              <div class="mouse-canvas">
+                <img src="assets/mouse.jpg" alt="Mouse em linhas brancas">
+                <button class="mouse-zone m-left" data-target="MOUSE 1"><span>MOUSE 1</span></button>
+                <button class="mouse-zone m-right" data-target="MOUSE 2"><span>MOUSE 2</span></button>
+                <button class="mouse-zone m-wheel" data-target="MOUSE 3"><span>MOUSE 3</span></button>
+                <button class="mouse-zone m-x1" data-target="MOUSE X1"><span>MOUSE X1</span></button>
+                <button class="mouse-zone m-x2" data-target="MOUSE X2"><span>MOUSE X2</span></button>
+              </div>
+            </div>
+          </div>
+          <footer class="panel-foot">SEGURE E ARRASTE <span>→</span> solte exatamente sobre uma tecla ou botão do mouse</footer>
+        </section>
+      </div>
+    </section>
+
+    <section class="page" id="enginePage">
+      <div class="titlebar"><div><h1>INPUT ENGINE</h1><p>Ajuste a resposta do analógico virtual controlado pelo mouse.</p></div></div>
+      <div class="two-column">
+        <section class="panel form-panel"><header class="panel-head"><h2>SENSIBILIDADE</h2><span>AJUSTE FINO</span></header><div class="panel-body">
+          <div class="field-grid">
+            <label>EIXO X<input id="axisX" type="number" step="100" min="0" max="20000"></label>
+            <label>EIXO Y<input id="axisY" type="number" step="100" min="0" max="20000"></label>
+            <label>CURVA H<input id="curveH" type="number" step="0.1" min="0.2" max="3"></label>
+            <label>CURVA V<input id="curveV" type="number" step="0.1" min="0.2" max="3"></label>
+            <label>FILTRO H<input id="filterH" type="number" step="0.1" min="0" max="4"></label>
+            <label>FILTRO V<input id="filterV" type="number" step="0.1" min="0" max="4"></label>
+            <label class="wide">ACELERAÇÃO GLOBAL<input id="accel" type="number" step="0.1" min="0" max="5"></label>
+          </div>
+          <div class="button-row"><button class="action" id="engineReset">RESTAURAR</button><button class="action primary" id="engineSave">APLICAR E SALVAR</button></div>
+        </div></section>
+        <section class="panel"><header class="panel-head"><h2>TESTE DE MOVIMENTO</h2><span>PRÉVIA</span></header><div class="panel-body">
+          <div class="engine-test" id="engineTest"><div class="crosshair"></div><div class="camera-dot" id="cameraDot"></div></div>
+          <div class="readout left" id="engineReadout">Mova o mouse dentro da área.</div>
+          <p class="note">Esta prévia não envia comandos para jogos.</p>
+        </div></section>
+      </div>
+    </section>
+
+    <section class="page" id="systemPage">
+      <div class="titlebar"><div><h1>SISTEMA</h1><p>Drivers necessários, diagnóstico e atualizações do 87Z.</p></div><button class="action" id="refreshSystem">VERIFICAR NOVAMENTE</button></div>
+      <div class="system-grid">
+        <section class="panel system-card"><header class="panel-head"><h2>VIGEMBUS</h2><span class="status-pill checking" id="vigemBadge">VERIFICANDO</span></header><div class="panel-body"><p id="vigemText">Verificando o driver usado pelo controle Xbox virtual.</p><button class="action primary hidden" id="installVigem">BAIXAR E INSTALAR</button></div></section>
+        <section class="panel system-card"><header class="panel-head"><h2>ATALHO DO CONTROLE</h2><span class="status-pill ok" id="shortcutBadge">F8</span></header><div class="panel-body"><p id="shortcutText">Use o atalho mesmo com o 87Z minimizado para ligar ou desligar o controle virtual.</p><div class="button-row left"><button class="action primary" id="shortcutCapture">ALTERAR ATALHO</button><button class="action" id="shortcutReset">USAR F8</button></div></div></section>
+        <section class="panel system-card update-card"><header class="panel-head"><h2>ATUALIZAÇÕES</h2><span class="status-pill" id="updateBadge">PRONTO</span></header><div class="panel-body"><p id="updateText">Clique para procurar uma versão nova.</p><div class="button-row left"><button class="action primary" id="checkUpdate">VERIFICAR ATUALIZAÇÕES</button><button class="action hidden" id="downloadUpdate">BAIXAR</button><button class="action primary hidden" id="installUpdate">INSTALAR E REINICIAR</button></div><div class="progress hidden" id="updateProgress"><i></i></div></div></section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom"><span>87Z • XINPUT • WINDOWS 10/11 64-BIT</span><span>Configurações salvas automaticamente neste computador.</span></footer>
 </div>
-<div class="help"><strong>Mini tutorial de ajuste</strong><br><br>
-<strong>Eixo X/Y:</strong> define a velocidade base horizontal e vertical do analógico (maior valor = mira mais rápida).<br>
-<strong>Curva H/V:</strong> muda a resposta do movimento no começo e no fim do deslocamento.<br>
-<strong>Filtro H/V:</strong> suaviza microvariações; alto demais pode deixar a mira pesada.<br>
-<strong>Aceleração Global:</strong> aumenta o ganho em movimentos rápidos; ajuste em passos pequenos para evitar instabilidade.</div>
-<div class="page-actions"><button class="action" id="engineReset">Restaurar valores</button><button class="action primary" id="engineSave">Salvar Input Engine</button></div>
-</div></section>
-<section class="panel"><div class="panel-head"><h2>TESTE DE MOVIMENTO</h2><span>MOUSE → CÂMERA VIRTUAL</span></div><div style="padding:18px"><div class="engine-test" id="engineTest"><div class="cross"></div><div class="camera-dot" id="cameraDot"></div></div><div class="engine-readout" id="engineReadout">Mova o mouse dentro da área para testar a resposta configurada.</div><div class="engine-note">O teste aplica os parâmetros ao movimento de uma câmera virtual nesta página; ele não injeta entradas em jogos ou outros processos.</div></div></section>
-</div>
-</section>
-
-<section class="engine-page" id="macroPage">
-<div class="titlebar"><div><div class="title">MACROS</div><div class="subtitle">Ative ou desative recursos configuráveis do aplicativo.</div></div></div>
-<div class="panel"><div class="panel-head"><h2>MACROS DISPONÍVEIS</h2><span>ON / OFF</span></div><div style="padding:18px"><div class="macro-list">
-<div class="macro-card"><div><h3>Slide Cancel</h3><p>Ativa/desativa a configuração do recurso no aplicativo.</p></div><button class="toggle" id="slideCancelToggle" aria-label="Ativar ou desativar Slide Cancel"><i></i></button></div>
-</div><div class="engine-note">O botão controla o estado da configuração e fica salvo neste navegador. A página não executa sequências automáticas de teclas em jogos.</div></div></div>
-</section></main>
-<footer class="bottom"><div>87z • <strong>WEB DEMO / SIMULAÇÃO</strong> • As configurações ficam salvas neste navegador.</div><div class="actions"><button class="action" id="reset">Restaurar padrão</button><button class="action primary" id="save">Salvar configurações</button></div></footer>
-</div>
-<div class="toast" id="toast"></div>
-<script>
-const keyRows=[['ESC','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12'],['`','1','2','3','4','5','6','7','8','9','0','-','=','BACK'],['TAB','Q','W','E','R','T','Y','U','I','O','P','[',']','\\'],['CAPS','A','S','D','F','G','H','J','K','L',';','\'','ENTER'],['SHIFT','Z','X','C','V','B','N','M',',','.','/','SHIFT'],['CTRL','WIN','ALT','SPACE','INS','DEL','UP','LEFT','DOWN','RIGHT']];
-const defaults={'D-PAD':'↑ ↓ ← →','L3 / LEFT STICK':'W A S D','R3 / RIGHT STICK':'MOUSE • CÂMERA','TRIÂNGULO':'E','CÍRCULO':'C','X':'SPACE','QUADRADO':'R','L1':'Q','R1':'G','L2':'MOUSE 2','R2':'MOUSE 1','SHARE':'TAB','OPTIONS':'ESC','TOUCHPAD':'M','L3':'SHIFT','R3':'V'};
-let mappings={...defaults};try{mappings={...mappings,...JSON.parse(localStorage.getItem('87z-theme-mappings')||'{}')}}catch(e){}
-// Os analógicos de movimento/câmera são fixos e não podem ser remapeados.
-mappings['L3 / LEFT STICK']='W A S D';
-mappings['R3 / RIGHT STICK']='MOUSE • CÂMERA';
-const keyEl=document.getElementById('keys'),toast=document.getElementById('toast');let drag=null;
-const controlNames={"D-PAD":"D-PAD","L3 / LEFT STICK":"LEFT STICK","R3 / RIGHT STICK":"RIGHT STICK","TRIÂNGULO":"△","CÍRCULO":"○","X":"×","QUADRADO":"□","L1":"L1","R1":"R1","L2":"L2","R2":"R2","SHARE":"SHARE","OPTIONS":"OPTIONS","TOUCHPAD":"TOUCHPAD","L3":"L3","R3":"R3"};
-function showToast(t){toast.textContent=t;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1600)}
-function shortName(c){return controlNames[c]||c}
-function findTarget(target){return [...document.querySelectorAll('.key,.mouse-hotspot')].find(x=>x.dataset.key===target||x.dataset.target===target)}
-function render(){document.querySelectorAll('.hotspot').forEach(h=>h.classList.remove('selected'));document.getElementById('mappedCount').textContent=Object.keys(mappings).length+' mapeamentos';document.querySelectorAll('.key').forEach(k=>{const c=Object.entries(mappings).find(([,v])=>v===k.dataset.key)?.[0];k.classList.toggle('mapped',!!c);k.querySelector('.mapped-control')?.remove();if(c){const wrap=k.querySelector('.key-label');const s=document.createElement('span');s.className='mapped-control';s.textContent=shortName(c);wrap.appendChild(s)}});document.querySelectorAll('.mouse-hotspot').forEach(m=>{const c=Object.entries(mappings).find(([,v])=>v===m.dataset.target)?.[0];m.classList.toggle('mapped',!!c);const label=m.querySelector('.mouse-label');label.textContent=c?shortName(c):''})}
-const keyRects={
-'ESC':[51,182,98,79],'F1':[153,182,77,79],'F2':[234,182,78,79],'F3':[316,182,78,79],'F4':[398,182,78,79],'F5':[480,182,78,79],'F6':[561,182,77,79],'F7':[642,182,77,79],'F8':[723,182,77,79],'F9':[804,182,79,79],'F10':[887,182,79,79],'F11':[970,182,79,79],'F12':[1053,182,80,79],
-'`':[51,265,71,76],'1':[126,265,69,76],'2':[199,264,69,77],'3':[272,264,70,77],'4':[346,264,69,77],'5':[419,265,69,76],'6':[492,265,68,76],'7':[564,265,68,76],'8':[636,265,69,76],'9':[709,265,69,76],'0':[782,265,69,76],'-':[855,264,69,77],'=':[928,264,70,77],'BACK':[1002,265,131,76],
-'TAB':[51,344,108,77],'Q':[163,344,69,77],'W':[236,344,68,77],'E':[308,344,70,77],'R':[382,344,68,77],'T':[454,344,69,77],'Y':[527,344,68,77],'U':[599,344,69,77],'I':[672,344,69,77],'O':[745,344,69,77],'P':[818,344,69,77],'[':[891,344,69,77],']':[964,344,69,77],'\\':[1037,344,96,77],
-'CAPS':[51,424,130,76],'A':[185,424,68,76],'S':[257,424,69,76],'D':[330,424,68,76],'F':[402,424,68,76],'G':[473,424,69,76],'H':[546,424,68,76],'J':[618,424,69,76],'K':[691,424,68,76],'L':[763,424,69,76],';':[836,424,69,76],"'": [909,424,69,76],'ENTER':[981,424,151,76],
-'SHIFT':[51,504,180,75],'Z':[234,504,76,75],'X':[313,504,75,75],'C':[392,504,75,75],'V':[471,504,75,75],'B':[549,504,76,75],'N':[628,504,76,75],'M':[707,504,75,75],',':[786,504,75,75],'.':[864,504,76,75],'/':[943,504,189,76],
-'CTRL':[51,584,89,75],'WIN':[143,584,77,75],'ALT':[224,584,77,75],'SPACE':[305,583,343,76],'INS':[652,583,76,76],'DEL':[732,583,76,76],'UP':[812,583,77,76],'LEFT':[893,583,76,76],'DOWN':[974,584,77,75],'RIGHT':[1055,584,77,75]
-};
-function makeKeys(){
-  keyEl.innerHTML='';
-  Object.entries(keyRects).forEach(([k,r])=>{
-    const b=document.createElement('button');
-    b.className='key'; b.dataset.key=k;
-    b.innerHTML='<span class="key-label"><span class="key-name">'+k+'</span></span>';
-    b.style.left=r[0]+'px'; b.style.top=r[1]+'px'; b.style.width=r[2]+'px'; b.style.height=r[3]+'px';
-    keyEl.appendChild(b);
-  });
-  keyEl.style.width='1181px'; keyEl.style.height='896px';
-  keyEl.style.transformOrigin='top left';
-  syncKeyboardOverlay();
-  render();
-}
-function syncKeyboardOverlay(){
-  const img=document.querySelector('.keyboard'); const canvas=document.querySelector('.keyboard-canvas');
-  if(!img||!canvas)return;
-  const cr=canvas.getBoundingClientRect();
-  const scale=cr.width/1181;
-  keyEl.style.transform=`scale(${scale})`;
-}
-window.addEventListener('resize',syncKeyboardOverlay);
-function point(e){return {x:e.clientX,y:e.clientY}}
-function clearDrop(){document.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'))}
-function updateDrop(x,y){clearDrop();const el=document.elementFromPoint(x,y)?.closest('.key,.mouse-hotspot');if(el){el.classList.add('drop-target');return el}return null}
-function createDragGhost(control,x,y){const g=document.createElement('div');g.className='drag-ghost';g.textContent=shortName(control);g.id='dragGhost';document.body.appendChild(g);moveGhost(x,y)}
-function moveGhost(x,y){const g=document.getElementById('dragGhost');if(g){g.style.left=(x+14)+'px';g.style.top=(y+14)+'px'}}
-function createLine(x1,y1,x2,y2){let svg=document.getElementById('dragLine');if(!svg){svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.id='dragLine';svg.classList.add('drag-line');svg.innerHTML='<line></line>';document.body.appendChild(svg)}svg.setAttribute('width',innerWidth);svg.setAttribute('height',innerHeight);const line=svg.querySelector('line');line.setAttribute('x1',x1);line.setAttribute('y1',y1);line.setAttribute('x2',x2);line.setAttribute('y2',y2)}
-function startDrag(control,e){if(control==='L3 / LEFT STICK'||control==='R3 / RIGHT STICK'){showToast(control==='L3 / LEFT STICK'?'LEFT STICK é fixo em WASD.':'RIGHT STICK é fixo na câmera pelo mouse.');return}if(e.button!==undefined&&e.button!==0)return;e.preventDefault();const p=point(e);drag={control,start:p};document.querySelectorAll('.hotspot').forEach(h=>h.classList.remove('selected'));e.currentTarget.classList.add('selected');createDragGhost(control,p.x,p.y);createLine(p.x,p.y,p.x,p.y);showToast('Arrastando '+shortName(control)+'… solte na tecla ou no mouse.');window.addEventListener('pointermove',moveDrag);window.addEventListener('pointerup',endDrag,{once:true})}
-function moveDrag(e){if(!drag)return;const p=point(e);moveGhost(p.x,p.y);createLine(drag.start.x,drag.start.y,p.x,p.y);updateDrop(p.x,p.y)}
-function endDrag(e){if(!drag)return;const p=point(e);const target=updateDrop(p.x,p.y);if(target){const value=target.dataset.key||target.dataset.target;Object.keys(mappings).forEach(c=>{if(mappings[c]===value)delete mappings[c]});mappings[drag.control]=value;save(false);showToast(shortName(drag.control)+' → '+value)}else{showToast('Solte sobre uma tecla ou botão do mouse.')}drag=null;document.getElementById('dragGhost')?.remove();document.getElementById('dragLine')?.remove();clearDrop();window.removeEventListener('pointermove',moveDrag)}
-function save(show=true){localStorage.setItem('87z-theme-mappings',JSON.stringify(mappings));render();if(show)showToast('Configuração salva.')}
-function reset(){mappings={...defaults,'L3 / LEFT STICK':'W A S D','R3 / RIGHT STICK':'MOUSE • CÂMERA'};localStorage.removeItem('87z-theme-mappings');render();showToast('Mapeamento padrão restaurado.')}
-document.querySelectorAll('.hotspot').forEach(h=>{if(h.dataset.control==='L3 / LEFT STICK'||h.dataset.control==='R3 / RIGHT STICK')h.classList.add('fixed-stick');h.addEventListener('pointerdown',e=>startDrag(h.dataset.control,e))});
-document.querySelectorAll('.device-tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.device-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const mouse=b.dataset.view==='mouse';document.getElementById('keyboardView').classList.toggle('hidden',mouse);document.getElementById('mouseView').classList.toggle('active',mouse)});
-document.getElementById('reset').onclick=reset;document.getElementById('saveMappingTop').onclick=()=>save(true);document.getElementById('resetNav').onclick=()=>{reset();document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.querySelector('.nav button[data-page="mappingPage"]').classList.add('active');document.getElementById('mappingPage').style.display='block';document.getElementById('enginePage').classList.remove('active');document.getElementById('macroPage').classList.remove('active')};document.getElementById('save').onclick=()=>save(true);
-
-// Navegação entre as áreas
-document.querySelectorAll('.nav button[data-page]').forEach(btn=>btn.addEventListener('click',()=>{
- document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
- document.getElementById('mappingPage').style.display=btn.dataset.page==='mappingPage'?'block':'none';
- document.getElementById('enginePage').classList.toggle('active',btn.dataset.page==='enginePage');
- document.getElementById('macroPage').classList.toggle('active',btn.dataset.page==='macroPage');
-}));
-
-const engineDefaults={axisX:5000,axisY:5000,curveH:0.9,curveV:1.1,filterH:0.4,filterV:0.5,accel:0.5};
-let engine={...engineDefaults};try{engine={...engine,...JSON.parse(localStorage.getItem('87z-input-engine')||'{}')}}catch(e){}
-const ids=Object.keys(engineDefaults);
-function renderEngine(){ids.forEach(id=>document.getElementById(id).value=engine[id]);}
-function saveEngine(show=true){ids.forEach(id=>engine[id]=Number(document.getElementById(id).value)||0);localStorage.setItem('87z-input-engine',JSON.stringify(engine));if(show)showToast('Input Engine salvo.');}
-document.getElementById('engineSave').onclick=()=>saveEngine(true);
-document.getElementById('engineReset').onclick=()=>{engine={...engineDefaults};localStorage.removeItem('87z-input-engine');renderEngine();showToast('Valores padrão restaurados.');};
-const engineTest=document.getElementById('engineTest'),cameraDot=document.getElementById('cameraDot'),engineReadout=document.getElementById('engineReadout');
-let cam={x:0,y:0,tx:0,ty:0};
-function applyEngine(dx,dy){const ex=engine.axisX/5000,ey=engine.axisY/5000;const sx=Math.sign(dx)*Math.pow(Math.abs(dx),Math.max(.1,engine.curveH))*ex*(1+engine.accel*.15);const sy=Math.sign(dy)*Math.pow(Math.abs(dy),Math.max(.1,engine.curveV))*ey*(1+engine.accel*.15);cam.tx+=(sx*(1-Math.min(.95,engine.filterH*.12)));cam.ty+=(sy*(1-Math.min(.95,engine.filterV*.12)));cam.tx=Math.max(-45,Math.min(45,cam.tx));cam.ty=Math.max(-45,Math.min(45,cam.ty));cameraDot.style.transform=`translate(calc(-50% + ${cam.tx}px),calc(-50% + ${cam.ty}px))`;engineReadout.textContent=`X: ${cam.tx.toFixed(1)} • Y: ${cam.ty.toFixed(1)} • curva H/V: ${engine.curveH} / ${engine.curveV}`;}
-engineTest.addEventListener('pointermove',e=>{const r=engineTest.getBoundingClientRect();const dx=(e.movementX||0)*.35,dy=(e.movementY||0)*.35;applyEngine(dx,dy);});
-renderEngine();
-const slideToggle=document.getElementById('slideCancelToggle');let slideCancel=localStorage.getItem('87z-slide-cancel')==='1';function renderSlide(){slideToggle.classList.toggle('on',slideCancel);slideToggle.setAttribute('aria-pressed',String(slideCancel));}slideToggle.onclick=()=>{slideCancel=!slideCancel;localStorage.setItem('87z-slide-cancel',slideCancel?'1':'0');renderSlide();showToast('Slide Cancel: '+(slideCancel?'ATIVADO':'DESATIVADO'));};renderSlide();
-makeKeys();
-</script>
+<div class="toast" id="toast" role="status"></div>
+<script src="renderer.js"></script>
 </body>
 </html>

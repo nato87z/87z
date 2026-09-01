@@ -1,11 +1,7 @@
-87z — Web Demo
-Abra index.html no navegador.
+87Z 0.4.0
 
-Esta versão é uma demonstração visual local:
-- mapeamento de botões com teclado/mouse;
-- WASD fixo no analógico esquerdo;
-- mouse simulado no analógico direito;
-- configurações salvas no localStorage;
-- páginas Dashboard, Remapear, Macros e Debug.
+Aplicativo Windows que converte teclado e mouse em um controle Xbox 360
+virtual por meio do ViGEmBus.
 
-IMPORTANTE: esta versão WEB NÃO cria um controle virtual real no Windows.
+Áreas: mapeamento completo (incluindo D-pad), Input Engine, diagnóstico,
+atalho global para o controle e atualizações automáticas.

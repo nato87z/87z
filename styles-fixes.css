@@ -1,0 +1,10 @@
+/* Ajustes finais de hitboxes. Mantidos separados para facilitar calibração. */
+.h-l1{left:21%;top:27%;width:7.5%;height:4.5%}
+.h-r1{left:71.2%;top:27%;width:7.5%;height:4.5%}
+.h-circle{left:78.7%;top:40.5%;width:6.2%;height:8%}
+.h-touch{left:34.5%;top:24.2%;width:30.8%;height:25%}
+.dpad-zone{border-radius:7px}
+.h-dpad-up{left:22.45%;top:33.6%;width:4.7%;height:6.2%}
+.h-dpad-left{left:17.4%;top:39.9%;width:5%;height:6.3%}
+.h-dpad-right{left:27.2%;top:39.9%;width:5%;height:6.3%}
+.h-dpad-down{left:22.45%;top:46.3%;width:4.7%;height:6.2%}
