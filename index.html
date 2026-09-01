@@ -22,7 +22,7 @@
 <button id="resetNav">RESTAURAR PADRÃO</button>
 </nav>
 <main class="content"><section class="mapping-page" id="mappingPage">
-<div class="titlebar"><div><div class="title">CONTROLADOR + TECLADO / MOUSE</div><div class="subtitle">Passe o mouse sobre um botão do controle para ver a função. Segure e arraste para mapear.</div></div><div class="subtitle" id="mappedCount">0 mapeamentos</div></div>
+<div class="titlebar"><div><div class="title">CONTROLADOR + TECLADO / MOUSE</div><div class="subtitle">Passe o mouse sobre um botão do controle para ver a função. Segure e arraste para mapear.</div></div><div class="actions"><div class="subtitle" id="mappedCount">0 mapeamentos</div><button class="action primary" id="saveMappingTop">Salvar configurações</button></div></div>
 <div class="workspace">
 <section class="panel"><div class="panel-head"><h2>CONTROLE</h2><span>SEGURE + ARRASTE →</span></div><div class="device-stage"><div class="device-canvas" id="controllerCanvas">
 <img class="device-image" src="assets/controller.png" alt="Controle em linhas brancas">
@@ -141,7 +141,7 @@ function save(show=true){localStorage.setItem('87z-theme-mappings',JSON.stringif
 function reset(){mappings={...defaults,'L3 / LEFT STICK':'W A S D','R3 / RIGHT STICK':'MOUSE • CÂMERA'};localStorage.removeItem('87z-theme-mappings');render();showToast('Mapeamento padrão restaurado.')}
 document.querySelectorAll('.hotspot').forEach(h=>{if(h.dataset.control==='L3 / LEFT STICK'||h.dataset.control==='R3 / RIGHT STICK')h.classList.add('fixed-stick');h.addEventListener('pointerdown',e=>startDrag(h.dataset.control,e))});
 document.querySelectorAll('.device-tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.device-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const mouse=b.dataset.view==='mouse';document.getElementById('keyboardView').classList.toggle('hidden',mouse);document.getElementById('mouseView').classList.toggle('active',mouse)});
-document.getElementById('reset').onclick=reset;document.getElementById('resetNav').onclick=()=>{reset();document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.querySelector('.nav button[data-page="mappingPage"]').classList.add('active');document.getElementById('mappingPage').style.display='block';document.getElementById('enginePage').classList.remove('active');document.getElementById('macroPage').classList.remove('active')};document.getElementById('save').onclick=()=>save(true);
+document.getElementById('reset').onclick=reset;document.getElementById('saveMappingTop').onclick=()=>save(true);document.getElementById('resetNav').onclick=()=>{reset();document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.querySelector('.nav button[data-page="mappingPage"]').classList.add('active');document.getElementById('mappingPage').style.display='block';document.getElementById('enginePage').classList.remove('active');document.getElementById('macroPage').classList.remove('active')};document.getElementById('save').onclick=()=>save(true);
 
 // Navegação entre as áreas
 document.querySelectorAll('.nav button[data-page]').forEach(btn=>btn.addEventListener('click',()=>{
