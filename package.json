@@ -1,6 +1,6 @@
 {
   "name": "87z-windows-app",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "87Z Windows virtual Xbox 360 controller emulator via ViGEmBus",
   "main": "main.js",
   "author": "87Z",
