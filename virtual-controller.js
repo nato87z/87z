@@ -12,8 +12,8 @@ const VIGEM_CLIENT_URL = 'https://unpkg.com/vigemclient@1.5.3/native/x64/ViGEmCl
 const VIGEM_CLIENT_SHA256 = '96b3e40f6ef9e2698d7bb37d0a20fd77ad947714c3463b986580d3b307b3a1ca';
 
 const DEFAULT_ENGINE = {
-  axisX: 5000, axisY: 5000, curveH: 0.9, curveV: 1.1,
-  filterH: 0.4, filterV: 0.5, accel: 0.5
+  axisX: 3200, axisY: 3000, curveH: 1.25, curveV: 1.35,
+  filterH: 0.65, filterV: 0.75, accel: 0.2
 };
 
 const BUTTONS = {
@@ -40,7 +40,7 @@ class VirtualController {
     this.keysDown = new Set(); this.mouseButtonsDown = new Set(); this.hooksInstalled = false; this.heartbeatTimer = null;
     this.left = { x: 0, y: 0 }; this.right = { x: 0, y: 0 };
     this.dpad = {up:false,down:false,left:false,right:false};
-    this.rightVelocity = { x: 0, y: 0 }; this.lastMouse = null; this.decayTimer = null;
+    this.rightVelocity = { x: 0, y: 0 }; this.rightTarget = { x: 0, y: 0 }; this.lastMouse = null; this.decayTimer = null;
     this.report = { wButtons: 0, bLeftTrigger: 0, bRightTrigger: 0, sThumbLX: 0, sThumbLY: 0, sThumbRX: 0, sThumbRY: 0 };
     this.lastReportJson = null;
   }
@@ -178,29 +178,30 @@ class VirtualController {
   handleMouseMove = (event) => {
     if (this.lastMouse) {
       const rawDx = Number(event.x||0)-this.lastMouse.x, rawDy = Number(event.y||0)-this.lastMouse.y;
-      const sx = Math.max(0.05, Number(this.engine.axisX||5000)/5000), sy = Math.max(0.05, Number(this.engine.axisY||5000)/5000);
+      if(Math.abs(rawDx)>300||Math.abs(rawDy)>300){this.lastMouse={x:Number(event.x||0),y:Number(event.y||0)};return;}
+      const sx = Math.max(0.05, Number(this.engine.axisX||3200)/5000), sy = Math.max(0.05, Number(this.engine.axisY||3000)/5000);
       const ch = Math.max(0.2, Number(this.engine.curveH||1)), cv = Math.max(0.2, Number(this.engine.curveV||1));
       const accel = Math.max(0, Number(this.engine.accel||0));
-      const dx = Math.sign(rawDx)*Math.pow(Math.min(1,Math.abs(rawDx)/18),ch);
+      const dx = Math.sign(rawDx)*Math.pow(Math.min(1,Math.abs(rawDx)/24),ch);
       // No XInput, Y positivo aponta para cima; coordenadas de tela crescem para baixo.
-      const dy = -Math.sign(rawDy)*Math.pow(Math.min(1,Math.abs(rawDy)/18),cv);
-      const gain = 0.42*(1+accel*0.15);
-      this.rightVelocity.x = Math.max(-1,Math.min(1,this.rightVelocity.x+dx*sx*gain));
-      this.rightVelocity.y = Math.max(-1,Math.min(1,this.rightVelocity.y+dy*sy*gain));
-      this.right.x=this.rightVelocity.x; this.right.y=this.rightVelocity.y;
-      this.writeAxis('rightX',this.right.x,false); this.writeAxis('rightY',this.right.y,false); this.sendReport();
-      this.emit('stick',{stick:'RIGHT',x:this.right.x,y:this.right.y});
+      const dy = -Math.sign(rawDy)*Math.pow(Math.min(1,Math.abs(rawDy)/24),cv);
+      const gain = 0.95*(1+accel*0.08);
+      this.rightTarget.x = Math.max(-1,Math.min(1,dx*sx*gain));
+      this.rightTarget.y = Math.max(-1,Math.min(1,dy*sy*gain));
     }
     this.lastMouse={x:Number(event.x||0),y:Number(event.y||0)};
   };
 
   tickRightStick() {
-    if (Math.abs(this.rightVelocity.x)<0.001 && Math.abs(this.rightVelocity.y)<0.001) {
-      this.rightVelocity={x:0,y:0}; this.right={x:0,y:0};
+    const fh=Math.max(0.02,Number(this.engine.filterH||0.65)), fv=Math.max(0.02,Number(this.engine.filterV||0.75));
+    const smoothX=Math.max(0.08,Math.min(0.95,1-fh*0.18)), smoothY=Math.max(0.08,Math.min(0.95,1-fv*0.18));
+    this.rightVelocity.x += (this.rightTarget.x-this.rightVelocity.x)*smoothX;
+    this.rightVelocity.y += (this.rightTarget.y-this.rightVelocity.y)*smoothY;
+    this.rightTarget.x*=0.58; this.rightTarget.y*=0.58;
+    if (Math.abs(this.rightVelocity.x)<0.001 && Math.abs(this.rightVelocity.y)<0.001 && Math.abs(this.rightTarget.x)<0.001 && Math.abs(this.rightTarget.y)<0.001) {
+      this.rightVelocity={x:0,y:0}; this.rightTarget={x:0,y:0}; this.right={x:0,y:0};
       this.writeAxis('rightX',0,false); this.writeAxis('rightY',0,false); this.sendReport(); return;
     }
-    const fh=Math.max(0.02,Number(this.engine.filterH||0.4)), fv=Math.max(0.02,Number(this.engine.filterV||0.5));
-    this.rightVelocity.x*=Math.max(0,1-fh*0.16); this.rightVelocity.y*=Math.max(0,1-fv*0.16);
     this.right.x=this.rightVelocity.x; this.right.y=this.rightVelocity.y;
     this.writeAxis('rightX',this.right.x,false); this.writeAxis('rightY',this.right.y,false); this.sendReport();
   }
@@ -234,7 +235,7 @@ class VirtualController {
   stop(){
     const helperToStop=this.helper;
     this.keysDown.clear(); this.mouseButtonsDown.clear(); this.lastMouse=null;
-    this.left={x:0,y:0}; this.right={x:0,y:0}; this.rightVelocity={x:0,y:0};
+    this.left={x:0,y:0}; this.right={x:0,y:0}; this.rightVelocity={x:0,y:0}; this.rightTarget={x:0,y:0};
     this.dpad={up:false,down:false,left:false,right:false};
     this.report={wButtons:0,bLeftTrigger:0,bRightTrigger:0,sThumbLX:0,sThumbLY:0,sThumbRX:0,sThumbRY:0};
     this.sendReport(true);
