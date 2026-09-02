@@ -9,6 +9,8 @@ const renderer = fs.readFileSync('renderer.js','utf8');
 
 const controls = [...html.matchAll(/data-control="([^"]+)"/g)].map(match=>match[1]);
 assert.equal(new Set(controls).size, controls.length, 'cada comando deve possuir uma única área clicável');
+assert(html.includes('assets/brand-logo.png'), 'a nova logo deve aparecer no cabeçalho');
+assert(!html.includes('CONTROLE VIRTUAL</small>'), 'o texto antigo da marca deve ser removido');
 assert(!html.includes('keyboard.jfif'), 'o teclado antigo não deve ficar sob as teclas novas');
 assert(css.includes('.controller-image') && css.includes('transform:none!important'), 'a imagem do controle deve permanecer estática');
 assert(!renderer.includes('highlightControl'), 'entradas não devem animar a imagem do controle');

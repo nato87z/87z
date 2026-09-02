@@ -1,0 +1,6 @@
+87Z 0.4.1
+
+IDENTIDADE VISUAL
+- Nova logo prata 87Z com coroa no aplicativo e nos atalhos do Windows.
+- Cabeçalho simplificado: somente a logo no canto superior esquerdo.
+- Tema redesenhado em preto e prata, com painéis, botões e teclas alinhados à nova identidade.
