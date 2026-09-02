@@ -77,8 +77,16 @@ async function installViGEm() {
     const safeName=path.basename(installer.name).replace(/[^a-z0-9._-]/gi,'_');
     const target=path.join(os.tmpdir(),safeName);
     await downloadFile(installer.browser_download_url,target);
-    const signature=await execWindows('powershell.exe',['-NoLogo','-NoProfile','-NonInteractive','-Command','(Get-AuthenticodeSignature -FilePath $args[0]).Status',target],15000);
-    if(!signature.ok||!/^Valid\s*$/im.test(signature.stdout))throw new Error('a assinatura digital do instalador oficial não pôde ser validada');
+    const signature=await execWindows('powershell.exe',['-NoLogo','-NoProfile','-NonInteractive','-Command','$sig=Get-AuthenticodeSignature -FilePath $args[0]; [PSCustomObject]@{Status=[string]$sig.Status;StatusMessage=[string]$sig.StatusMessage;Subject=[string]$sig.SignerCertificate.Subject} | ConvertTo-Json -Compress',target],15000);
+    let signatureInfo=null;
+    try{signatureInfo=JSON.parse(signature.stdout.trim());}catch(_){}
+    const signatureStatus=signatureInfo?.Status||signature.stdout.trim()||'desconhecido';
+    if(!signature.ok||signatureStatus!=='Valid'){
+      const detail=signatureInfo?.StatusMessage&&signatureInfo.StatusMessage!=='UnknownError'?` Motivo: ${signatureInfo.StatusMessage}`:'';
+      const message=`O Windows não conseguiu validar a assinatura digital do instalador oficial do ViGEmBus.${detail} Abra a página oficial e baixe o instalador manualmente.`;
+      send('87z:driver-status',{type:'signature-failed',message,officialUrl:VIGEM_OFFICIAL_RELEASES});
+      return {ok:false,needsManualDownload:true,officialUrl:VIGEM_OFFICIAL_RELEASES,message};
+    }
     send('87z:driver-status',{type:'installing'});
     const result=await execWindows('powershell.exe',['-NoLogo','-NoProfile','-NonInteractive','-Command','Start-Process -FilePath $args[0] -Verb RunAs -Wait',target],180000);
     if(!result.ok)throw new Error(result.stderr.trim()||'instalação cancelada ou não concluída');
