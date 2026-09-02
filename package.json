@@ -1,6 +1,6 @@
 {
   "name": "87z-windows-app",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "87Z Windows virtual Xbox 360 controller emulator via ViGEmBus",
   "main": "main.js",
   "author": "87Z",
@@ -48,7 +48,8 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "build/icon.ico"
+      "icon": "build/icon.ico",
+      "artifactName": "87Z-Setup-${version}.${ext}"
     },
     "publish": {
       "provider": "github",
