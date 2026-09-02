@@ -36,9 +36,10 @@ async function getSystemStatus() {
     execWindows('reg.exe',['query','HKLM\\SOFTWARE\\Nefarius Software Solutions e.U.\\ViGEm Bus Driver','/v','Version'])
   ]);
   const versionMatch=registry.stdout.match(/Version\s+REG_\w+\s+([^\r\n]+)/i);
+  const serviceExists=service.ok&&/SERVICE_NAME:\s*ViGEmBus/i.test(service.stdout);
   return {
     platform:'win32',
-    vigem:{installed:service.ok||registry.ok,version:versionMatch?.[1]?.trim()||null}
+    vigem:{installed:serviceExists,version:serviceExists?(versionMatch?.[1]?.trim()||null):null}
   };
 }
 
