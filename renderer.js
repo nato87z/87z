@@ -9,7 +9,7 @@ const defaults = {
   'L2':'MOUSE 2','R2':'MOUSE 1','SHARE':'TAB','OPTIONS':'ESC','TOUCHPAD':'M','L3':'SHIFT','R3':'V',
   'D-UP':'UP','D-DOWN':'DOWN','D-LEFT':'LEFT','D-RIGHT':'RIGHT'
 };
-const engineDefaults = { axisX:5000,axisY:5000,curveH:0.9,curveV:1.1,filterH:0.4,filterV:0.5,accel:0.5 };
+const engineDefaults = { axisX:3200,axisY:3000,curveH:1.25,curveV:1.35,filterH:0.65,filterV:0.75,accel:0.2 };
 const labels = {'TRIÂNGULO':'△','CÍRCULO':'○','X':'×','QUADRADO':'□','D-UP':'↑','D-DOWN':'↓','D-LEFT':'←','D-RIGHT':'→'};
 const keyboardRows = [
   [['ESC',1.25],['F1',1],['F2',1],['F3',1],['F4',1],['F5',1],['F6',1],['F7',1],['F8',1],['F9',1],['F10',1],['F11',1],['F12',1]],
